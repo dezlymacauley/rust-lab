@@ -1,0 +1,2 @@
+[shell_alias]
+run = "cargo run --quiet --bin"
