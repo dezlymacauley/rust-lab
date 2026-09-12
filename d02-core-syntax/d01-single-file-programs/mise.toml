@@ -1,2 +1,2 @@
 [shell_alias]
-run = "cargo run --quiet --bin"
+run = "mise runbin"
