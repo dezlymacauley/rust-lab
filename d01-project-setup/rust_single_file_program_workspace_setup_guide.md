@@ -170,34 +170,50 @@ _______________________________________________________________________________
 
 Add this to the `d01-topic-one/src/bin/f01_alpha.rs` file
 ```rust
-
+fn main() {
+    println!("\nThis is f01_alpha.rs\n");
+}
 ```
 _______________________________________________________________________________
 
 Add this to the `d01-topic-one/src/bin/f02_bravo.rs` file
 ```rust
-
+fn main() {
+    println!("\nThis is f02_bravo.rs\n");
+}
 ```
 _______________________________________________________________________________
 
 Add this to the `d02-topic-two/src/bin/f01_charlie.rs` file
 ```rust
-
+fn main() {
+    println!("\nThis is f01_charlie.rs\n");
+}
 ```
 _______________________________________________________________________________
 
 Add this to the `d02-topic-two/src/bin/f02_delta.rs` file
 ```rust
-
+fn main() {
+    println!("\nThis is f02_delta.rs\n");
+}
 ```
 _______________________________________________________________________________
 
 ### How to build and run the binary executable of a specify .rs file
 
+E.g. I want to run `f01_alpha.rs`
+
 - First navigate to the directory where the file is.
+- Then do this:
+`mise runbin f01_alpha.rs`
+
+- Or you can use the `run` alias:
+`run f01_alpha.rs`
+
 
 ```bash
-
+cd programs/d01-topic-one/src/bin
 ```
 _______________________________________________________________________________
 
