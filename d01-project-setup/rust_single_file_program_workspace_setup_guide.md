@@ -59,6 +59,10 @@ fi
 
 cargo run --quiet --bin "$BINARY_NAME"
 ```
+
+Note:
+- I called this `.mise-tasks/runbin.bash` because mise will not allow you
+to create a mise task called `run`
 _______________________________________________________________________________
 
 Add this to the `.gitignore` file
@@ -100,7 +104,7 @@ tab_spaces = 4
 ```
 _______________________________________________________________________________
 
-Create a Rust project inside the `programs` directory.
+### Create a Rust project inside the `programs` directory.
 
 Think of this project as a collection of standalone Rust programs.
 
@@ -115,39 +119,89 @@ cd ..
 rm -rf programs/d01-topic-one/src
 mkdir -p programs/d01-topic-one/src/bin
 
-cd programs/d01-topic-one/src/bin
-touch f01_alpha.rs
-touch f02_bravo.rs
+touch programs/d01-topic-one/src/bin/f01_alpha.rs
+touch programs/d01-topic-one/src/bin/f02_bravo.rs
+```
+_______________________________________________________________________________
+
+### Create a second Rust project inside the `programs` directory.
+
+I'm going to create another Rust project called `d02-topic-two`, 
+and I'm going to create two programs inside of it, called `f01_charlie.rs`,
+and `f02_delta.rs`
+
+```bash
+cd programs && cargo new --vcs none d02-topic-two
 cd ..
+
+rm -rf programs/d02-topic-two/src
+mkdir -p programs/d02-topic-two/src/bin
+
+touch programs/d02-topic-two/src/bin/f01_charlie.rs
+touch programs/d02-topic-two/src/bin/f02_delta.rs
 ```
 _______________________________________________________________________________
 
+### Note: 
+- Rust requires every file in the workspace to have a unique name.
+- So to be clear you can't have this:
+`programs/d02-topic-two/src/bin/f02_delta.rs`
+`programs/d01-topic-one/src/bin/f02_delta.rs`
+_______________________________________________________________________________
 
-Replace the contents of the `src/main.rs` file with this
+The structure of the `programs` directory should look like this
+```
+├── programs
+│   ├── d01-topic-one
+│   │   ├── Cargo.toml
+│   │   └── src
+│   │       └── bin
+│   │           ├── f01_alpha.rs
+│   │           └── f02_bravo.rs
+│   └── d02-topic-two
+│       ├── Cargo.toml
+│       └── src
+│           └── bin
+│               ├── f01_charlie.rs
+│               └── f02_delta.rs
+```
+
+_______________________________________________________________________________
+
+Add this to the `d01-topic-one/src/bin/f01_alpha.rs` file
 ```rust
-fn main() {
-    println!("\nRust Project\n");
-}
+
 ```
 _______________________________________________________________________________
 
-### Build the program (Create an executable binary)
+Add this to the `d01-topic-one/src/bin/f02_bravo.rs` file
+```rust
+
+```
+_______________________________________________________________________________
+
+Add this to the `d02-topic-two/src/bin/f01_charlie.rs` file
+```rust
+
+```
+_______________________________________________________________________________
+
+Add this to the `d02-topic-two/src/bin/f02_delta.rs` file
+```rust
+
+```
+_______________________________________________________________________________
+
+### How to build and run the binary executable of a specify .rs file
+
+- First navigate to the directory where the file is.
 
 ```bash
-cargo build
+
 ```
 _______________________________________________________________________________
 
-### Run the program (Run the executable binary)
-
-```bash
-cargo dev
-```
-_______________________________________________________________________________
-
-Note:
-- `cargo` has a built-in `clean` command to delete the `target` directory
-
+Run the built-in `cargo clean` command from any directory to save disk space
 ```bash
 cargo clean
 ```
