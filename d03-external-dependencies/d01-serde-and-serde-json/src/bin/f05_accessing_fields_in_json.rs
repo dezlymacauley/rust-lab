@@ -55,12 +55,20 @@ fn main() {
         .iter()
         .find(|element| order_id_to_find == element["orderId"]);
 
+    // TODO: Correct this
+
     if order.is_none() {
         println!("\nCould not find order {order_id_to_find}\n");
         // The program will exit here if the order was not found 
         return;
     }
 
-    println!("\n✅ Success: Order {order_id_to_find} was found\n");
+    println!("{}", order);
+
+    // println!("\n✅ Success: Order {order_id_to_find} was found\n");
+    //_________________________________________________________________________
+    
+
+
     //_________________________________________________________________________
 }
