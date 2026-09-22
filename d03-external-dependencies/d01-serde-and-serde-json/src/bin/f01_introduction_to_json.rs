@@ -1,11 +1,7 @@
 /*  
     
-    ABOUT: package-name
+    ABOUT: Introduction to JSON
     
-    ___________________________________________________________________________
-
-    SECTION: Introduction to JSON:
-
     JSON stands for "JavaScript Object Notation". 
 
     It is a language used for sending data.
@@ -88,5 +84,5 @@
 */
 
 fn main() {
-    println!("\nf02\n");
+    println!("\nf01\n");
 }
