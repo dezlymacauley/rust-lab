@@ -1,0 +1,4 @@
+[shell_alias]
+build = "cargo build"
+clean = "cargo clean"
+run = "mise runbin"
