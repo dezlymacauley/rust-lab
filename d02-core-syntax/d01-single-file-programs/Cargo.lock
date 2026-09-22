@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "d01"
+name = "d01-control-flow"
 version = "0.1.0"
 
 [[package]]
