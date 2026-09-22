@@ -1,5 +1,5 @@
 /*
-    ABOUT: Searching by id
+    ABOUT: Accessing fields in a JSON
 */
 
 use serde_json::{json, Value};
@@ -45,24 +45,21 @@ fn main() {
 
     //_________________________________________________________________________
 
-    // EXAMPLE: 1 => How to safely search for a specific order
-
     let id_to_find: String =
-        String::from("#91b2e67a-1120-438c-8ef2-2a91176b91c4");
+        String::from("91b2e67a-1120-438c-8ef2-2a91176b91c4");
 
-    let order_exists: bool = list_of_orders
+    // NOTE: This time `.find` is used.
+
+    let order: Option<&Value> = list_of_orders
         .iter()
-        .any(|element| element["orderId"] == id_to_find);
+        .find(|element| id_to_find == element["orderId"]);
 
-    if !order_exists {
-        println!("\nCould not find order {id_to_find}\n");
 
-        // I don't want to exit from `fn main` immeadiately if there
-        // is an error.
-        return;
-    }
+    println!("\n✅ Success: Order {id_to_find} was found\n");
 
-    println!("✅ Success: Order {id_to_find} was found");
+
+    //_________________________________________________________________________
+    
 
     //_________________________________________________________________________
 }
