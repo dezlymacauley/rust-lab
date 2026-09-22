@@ -1,6 +1,6 @@
 
 [package]
-name = "d01-serde-and-serde-json"
+name = "d02-clap"
 version = "0.1.0"
 edition = "2024"
 
@@ -9,17 +9,7 @@ edition = "2024"
 [dependencies]
 #______________________________________________________________________________
 
-serde = { 
-    version = "1.0.229", 
-    features = ["derive"] 
-}
-
+clap = { version = "4.6.7", features = ["derive"] }
 # This was added using:
-# cargo add serde --features derive
-#______________________________________________________________________________
-
-serde_json = "1.0.151"
-
-# This was added using:
-# cargo add serde_json
+# cargo add clap --features derive
 #______________________________________________________________________________
