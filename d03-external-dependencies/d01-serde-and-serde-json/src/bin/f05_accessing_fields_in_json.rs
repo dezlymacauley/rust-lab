@@ -45,21 +45,22 @@ fn main() {
 
     //_________________________________________________________________________
 
-    let id_to_find: String =
+    let order_id_to_find: String =
         String::from("91b2e67a-1120-438c-8ef2-2a91176b91c4");
 
-    // NOTE: This time `.find` is used.
-
+    // `.find` is used to get an immutable reference to the JSON payload.
+    // If none of the orders in `list_of_orders` matched `order_id_to_find`,
+    // then the value of `order` will be None.
     let order: Option<&Value> = list_of_orders
         .iter()
-        .find(|element| id_to_find == element["orderId"]);
+        .find(|element| order_id_to_find == element["orderId"]);
 
+    if order.is_none() {
+        println!("\nCould not find order {order_id_to_find}\n");
+        // The program will exit here if the order was not found 
+        return;
+    }
 
-    println!("\n✅ Success: Order {id_to_find} was found\n");
-
-
-    //_________________________________________________________________________
-    
-
+    println!("\n✅ Success: Order {order_id_to_find} was found\n");
     //_________________________________________________________________________
 }

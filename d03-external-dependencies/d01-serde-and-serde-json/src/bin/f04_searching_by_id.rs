@@ -47,22 +47,23 @@ fn main() {
 
     // EXAMPLE: 1 => How to safely search for a specific order
 
-    let id_to_find: String =
-        String::from("#91b2e67a-1120-438c-8ef2-2a91176b91c4");
+    let order_id_to_find: String =
+        String::from("91b2e67a-1120-438c-8ef2-2a91176b91c4");
 
-    let order_exists: bool = list_of_orders
+    // `.find` is used to get an immutable reference to the JSON payload.
+    // If none of the orders in `list_of_orders` matched `order_id_to_find`,
+    // then the value of `order` will be None.
+    let order: Option<&Value> = list_of_orders
         .iter()
-        .any(|element| element["orderId"] == id_to_find);
+        .find(|element| order_id_to_find == element["orderId"]);
 
-    if !order_exists {
-        println!("\nCould not find order {id_to_find}\n");
-
-        // I don't want to exit from `fn main` immeadiately if there
-        // is an error.
+    if order.is_none() {
+        println!("\nCould not find order {order_id_to_find}\n");
+        // The program will exit here if the order was not found 
         return;
     }
 
-    println!("✅ Success: Order {id_to_find} was found");
+    println!("\n✅ Success: Order {order_id_to_find} was found\n");
 
     //_________________________________________________________________________
 }
