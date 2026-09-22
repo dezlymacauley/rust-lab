@@ -13,9 +13,21 @@ fn main() {
 
     let json_payload: Value = json!(
         {
-            "userId": "7f10960a-ea7f-4e21-b3dc-06becbb729be",
-            "userName": "dezlymacauley",
-            "displayName": "Dezly Macauley"
+          "orderId": "44873812-9570-48d8-bff7-afa105b15e57",
+          "status": "outForDelivery",
+          "isPickup": false,
+          "customer": {
+            "name": "Sarah Jenkins",
+            "address": "123 Main St, Apt 4B"
+          },
+          "driver": {
+            "name": "Marcus",
+            "phone": "555-0198",
+            "vehicle": "Silver Toyota Corolla"
+          },
+          "items": ["Pepperoni Pizza", "Spicy nuggets"],
+          "discount": null,
+          "totalPrice": 24.50
         }
     );
 
@@ -25,8 +37,6 @@ fn main() {
 
     println!("\njson_payload (Raw)");
     println!("{json_payload}");
-    // json_payload (Raw)
-    // {"displayName":"Dezly Macauley","userId":"7f10960a-ea7f-4e21-b3dc-06becbb729be","userName":"dezlymacauley"}
 
     //_________________________________________________________________________
 
@@ -34,15 +44,6 @@ fn main() {
 
     println!("\njson_payload (Pretty Print)");
     println!("{json_payload:#}\n");
-    /*
 
-        json_payload (Pretty Print)
-        {
-          "displayName": "Dezly Macauley",
-          "userId": "7f10960a-ea7f-4e21-b3dc-06becbb729be",
-          "userName": "dezlymacauley"
-        }
-
-    */
     //_________________________________________________________________________
 }
