@@ -1,0 +1,7 @@
+[package]
+name = "d02-creating-a-get-route-that-responds-with-text"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-web = "4.15.0"

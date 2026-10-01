@@ -1,11 +1,3 @@
-[tasks.run-project]
-description = "🦀 Run the project | Alias = run"
-quiet = true
-run = """
-cargo run --quiet
-"""
-#______________________________________________________________________________
-
 [shell_alias]
-run = "mise run-project"
-#______________________________________________________________________________
+clean = "cargo clean"
+run = "cargo run --quiet"
