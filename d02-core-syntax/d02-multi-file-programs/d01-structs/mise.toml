@@ -1,0 +1,9 @@
+[tasks.run-project]
+description = "🦀 Run the project | Alias = run"
+quiet = true
+run = """
+cargo run --quiet
+"""
+
+[shell_alias]
+run = "mise run-project"
