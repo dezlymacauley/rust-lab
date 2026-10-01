@@ -1,6 +1,7 @@
 [package]
-name = "d01"
+name = "d01-creating-an-app"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+actix-web = "4.15.0"
