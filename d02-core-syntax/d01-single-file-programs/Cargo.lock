@@ -7,9 +7,13 @@ name = "d01-basics"
 version = "0.1.0"
 
 [[package]]
-name = "d02-control-flow"
+name = "d02-strings"
 version = "0.1.0"
 
 [[package]]
-name = "d03-structs"
+name = "d03-control-flow"
+version = "0.1.0"
+
+[[package]]
+name = "d04-structs"
 version = "0.1.0"

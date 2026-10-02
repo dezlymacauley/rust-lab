@@ -1,5 +1,5 @@
 [package]
-name = "d03-structs"
+name = "d04-structs"
 version = "0.1.0"
 edition = "2024"
 
