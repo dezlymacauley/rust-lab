@@ -1,5 +1,5 @@
 [package]
-name = "d02-creating-a-get-route-that-responds-with-text"
+name = "d02-creating-a-get-routes-that-responds-with-text"
 version = "0.1.0"
 edition = "2024"
 
