@@ -1,5 +1,5 @@
 [package]
-name = "d01-control-flow"
+name = "d03-structs"
 version = "0.1.0"
 edition = "2024"
 
