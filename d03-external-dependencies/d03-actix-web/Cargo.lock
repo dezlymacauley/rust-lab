@@ -388,6 +388,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "d05-creating-a-server-to-create-the-api-part-3"
+version = "0.1.0"
+dependencies = [
+ "actix-web",
+]
+
+[[package]]
 name = "deranged"
 version = "0.5.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
