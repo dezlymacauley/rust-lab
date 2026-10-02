@@ -1,8 +1,8 @@
-use actix_web::{App, HttpResponse, HttpServer, Responder, get};
+use actix_web::{App, HttpResponse, HttpServer, Responder, get, web};
 
-#[get("/hello")]
-async fn hello() -> impl Responder {
-    HttpResponse::Ok().body("Hello, Actix Web")
+#[get("/tasks/{id}")]
+async fn get_tasks(id: web::Path<u32>) -> impl Responder {
+    HttpResponse::Ok().body(format!("Task ID: {id}"))
 }
 
 #[actix_web::main]
@@ -10,7 +10,7 @@ async fn main() {
 
     let actix_web_app = || {
     App::new()
-        .service(hello)
+        .service(get_tasks)
     };
 
     let ip_address: &str = "127.0.0.1";
