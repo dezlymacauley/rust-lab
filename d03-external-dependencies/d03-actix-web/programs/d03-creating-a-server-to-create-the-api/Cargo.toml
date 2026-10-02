@@ -1,5 +1,5 @@
 [package]
-name = "d03-starting-the-server"
+name = "d03-creating-a-server-to-create-the-api"
 version = "0.1.0"
 edition = "2024"
 
