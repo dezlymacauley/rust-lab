@@ -374,7 +374,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "d03-creating-a-server-to-create-the-api"
+name = "d03-creating-a-server-to-create-the-api-part-1"
+version = "0.1.0"
+dependencies = [
+ "actix-web",
+]
+
+[[package]]
+name = "d04-creating-a-server-to-create-the-api-part-2"
 version = "0.1.0"
 dependencies = [
  "actix-web",

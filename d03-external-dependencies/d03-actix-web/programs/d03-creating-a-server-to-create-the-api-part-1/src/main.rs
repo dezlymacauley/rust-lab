@@ -40,4 +40,7 @@ fn main() {
         .bind(server_address)
         .expect("Actix Web Server could not bind to the server address")
         .run();
+
+    // NOTE: `actix_web_server` is asynchronus, 
+    // so it does nothing until you add `.await`
 }
