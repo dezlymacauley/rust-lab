@@ -17,5 +17,5 @@ fn main() {
     // 1. `actix_web_app` must be configured to handle at least one request.
     // 2. `actix_web_app` must be attached to a server.
     // 3. The server needs to bind to a network address so that
-    // `actix_web_app` can listen for incomming requests.
+    // `actix_web_app` can listen for incoming requests.
 }
