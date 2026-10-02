@@ -1,19 +1,8 @@
-use actix_web::{App, HttpResponse, Responder, get};
-
-#[get("/")]
-async fn root_get() -> impl Responder {
-    HttpResponse::Ok().body("This is the / route")
-}
-
-#[get("/trending")]
-async fn trending_get() -> impl Responder {
-    HttpResponse::Ok().body("This is the /trending route")
-}
+use actix_web::{App, HttpServer};
 
 fn main() {
     #[allow(unused_variables)]
+    let actix_web_app = App::new();
 
-    let actix_web_app = App::new()
-        .service(root_get)
-        .service(trending_get);
+    let actix_web_server = HttpServer::new(|| {actix_web_app});
 }
