@@ -1,11 +1,10 @@
 /*
-    ABOUT: Creating a server to create the API
+    ABOUT: Creating a server to create the API - Part 1
 
 */
 
 // `HttpServer` is a struct that allows you to create an instance
-// of an Actix Web Server that can be used to serve an instance of an
-// Actix Web App
+// of an Actix Web Server that can be used to serve an instance of `Server`
 use actix_web::{App, HttpResponse, HttpServer, Responder, get};
 
 #[get("/")]
@@ -36,7 +35,9 @@ fn main() {
     // accepts the server address a tupple
     let server_address = (ip_address, port);
 
-    // #[allow(unused_variables)]
+    #[allow(unused_variables)]
     let actix_web_server = HttpServer::new(actix_web_app)
-        .bind(server_address);
+        .bind(server_address)
+        .expect("Actix Web Server could not bind to the server address")
+        .run();
 }
