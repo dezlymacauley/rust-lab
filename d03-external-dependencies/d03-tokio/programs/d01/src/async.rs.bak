@@ -1,0 +1,39 @@
+
+// Example 1: Basic Async Function
+// Run with: cargo run --example 01_basic_async
+
+use tokio::time::{sleep, Duration};
+
+// Synchronous version
+fn fetch_data_sync() -> String {
+    // Simulate a slow task (e.g., database query, API call)
+    std::thread::sleep(std::time::Duration::from_secs(1));
+    String::from("Data fetched synchronously!")
+}
+
+// Async version
+async fn fetch_data_async() -> String {
+    // Simulate a slow task
+    sleep(Duration::from_secs(1)).await;
+    String::from("Data fetched asynchronously!")
+}
+
+#[tokio::main]
+async fn main() {
+    println!("=== Basic Async Function ===\n");
+
+    // Call synchronous version
+    println!("Calling synchronous function...");
+    let sync_result = fetch_data_sync();
+    println!("Sync result: {}", sync_result);
+
+    // Call async version
+    println!("\nCalling async function...");
+    let async_result = fetch_data_async().await;
+    println!("Async result: {}", async_result);
+
+    println!("\nKey Points:");
+    println!("- async fn defines an async function");
+    println!("- .await pauses execution without blocking the thread");
+    println!("- Async functions return immediately (Future), execute when awaited");
+}
