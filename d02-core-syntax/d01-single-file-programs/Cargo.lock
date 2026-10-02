@@ -3,9 +3,13 @@
 version = 4
 
 [[package]]
-name = "d01-control-flow"
+name = "d01-basics"
 version = "0.1.0"
 
 [[package]]
-name = "d02"
+name = "d02-control-flow"
+version = "0.1.0"
+
+[[package]]
+name = "d03-structs"
 version = "0.1.0"
