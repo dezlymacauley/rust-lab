@@ -1,5 +1,5 @@
 [package]
-name = "d07-example"
+name = "d07-routes-with-multiple-path-parameters"
 version = "0.1.0"
 edition = "2024"
 

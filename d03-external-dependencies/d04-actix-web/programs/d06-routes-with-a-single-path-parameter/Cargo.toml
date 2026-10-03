@@ -1,5 +1,5 @@
 [package]
-name = "d06-example"
+name = "d06-routes-with-a-single-path-parameter"
 version = "0.1.0"
 edition = "2024"
 
