@@ -1,17 +1,56 @@
+/*
+    ABOUT: Routes with multiple parameters
+*/
+
 use actix_web::{App, HttpResponse, HttpServer, Responder, get, web};
 
+//_____________________________________________________________________________
+
+// EXAMPLE: 1 => Accessing path parameters by index
+
+/*
+
 #[get("/tasks/{id}/{status}")]
-async fn get_tasks(path: web::Path<(u32, String)>) -> impl Responder {
-    let (id, status) = path.into_inner();
-    HttpResponse::Ok().body(format!("Task ID: {id}. Status: {status}"))
+async fn get_task(
+    path_parameters: web::Path<(u32, String)>
+    ) -> impl Responder {
+    let message = format!(
+        "Task ID: {}. Status: {}", 
+        path_parameters.0, path_parameters.1
+    );
+    HttpResponse::Ok().body(message)
 }
+
+*/
+
+//_____________________________________________________________________________
+
+// EXAMPLE: 2 => Accessing path parameters by destructuring the tuple
+
+#[get("/tasks/{id}/{status}")]
+async fn get_task(path_parameters: web::Path<(u32, String)>) -> impl Responder {
+
+    let (id, status) = path_parameters.into_inner();
+
+    let message = format!("Task ID: {id}. Status: {status}");
+
+    HttpResponse::Ok().body(message)
+}
+
+//_____________________________________________________________________________
+
+// #[get("/tasks/{id}/{status}")]
+// async fn get_tasks(path: web::Path<(u32, String)>) -> impl Responder {
+//     let (id, status) = path.into_inner();
+//     HttpResponse::Ok().body(format!("Task ID: {id}. Status: {status}"))
+// }
 
 #[actix_web::main]
 async fn main() {
 
     let actix_web_app = || {
     App::new()
-        .service(get_tasks)
+        .service(get_task)
     };
 
     let ip_address: &str = "127.0.0.1";
