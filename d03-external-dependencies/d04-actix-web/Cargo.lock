@@ -395,14 +395,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "d06-example"
+name = "d06-routes-with-a-single-path-parameter"
 version = "0.1.0"
 dependencies = [
  "actix-web",
 ]
 
 [[package]]
-name = "d07-example"
+name = "d07-routes-with-multiple-path-parameters"
+version = "0.1.0"
+dependencies = [
+ "actix-web",
+ "serde",
+]
+
+[[package]]
+name = "d08-query-parameters"
 version = "0.1.0"
 dependencies = [
  "actix-web",
