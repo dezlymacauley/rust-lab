@@ -52,6 +52,27 @@ async fn songs_get(params: web::Query<SongsGetParams>) -> impl Responder {
 
 //_____________________________________________________________________________
 
+// EXAMPLE: 2 => Optional
+
+#[derive(Deserialize)]
+struct QueryParams {
+    status: Option<String>,
+    limit: Option<usize>
+}
+
+#[get("/tasks")]
+async fn list_tasks(query: web::Query<QueryParams>) -> impl Responder {
+
+    let status = query.status.as_deref().unwrap_or("all");
+    let limit = query.limit.unwrap_or(10);
+
+    let message = format!("Fetching {limit} tasks with status: {status}");
+
+    HttpResponse::Ok().body(message)
+}
+
+//_____________________________________________________________________________
+
 #[actix_web::main]
 async fn main() {
 
