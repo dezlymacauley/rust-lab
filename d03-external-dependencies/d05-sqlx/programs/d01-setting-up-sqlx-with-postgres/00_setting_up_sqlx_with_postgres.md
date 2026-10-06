@@ -121,6 +121,75 @@ automatically read the `DATABASE_URL` variable from `.env` file.
 You don't need to load the `.env` when using these commands
 _______________________________________________________________________________
 
-However I prefer to be explicity
+If you want to be explicit when creating a table:
+```bash
+sqlx database create --database-url \
+    postgres://postgres:password@localhost:5432/ticketing_system
+```
 
+- Note: I'd avoid this as it exposes the password in the terminal
+_______________________________________________________________________________
+
+If you want to be explicit when deleting a table:
+```bash
+sqlx database drop --database-url \
+    postgres://postgres:password@localhost:5432/ticketing_system
+```
+_______________________________________________________________________________
+
+Use the `sqlx` cli to create a `.sql` file that will store the SQL syntax
+required to create the `tickets` table in the `ticking_system` database.
+```bash
+sqlx migrate add create_tickets
+```
+
+You should see an output like this:
+```
+Creating migrations/20261006160556_create_tickets.sql
+```
+
+Note: 
+- This file will be blank. That's fine.
+- The whole point of this command is to create a `.sql` file that has a
+unique index.
+_______________________________________________________________________________
+
+Add this to the `migrations/20261006160556_create_tickets.sql` file
+```sql
+CREATE TABLE tickets (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
+_______________________________________________________________________________
+
+Run this command
+```bash
+sqlx migrate run
+```
+
+You should see an output like this
+```
+Applied 20261006160556/migrate create tickets (9.960373ms)
+```
+_______________________________________________________________________________
+
+To confirm if the table was created, run this command:
+```bash
+docker exec postgres-workflow psql \
+    -U postgres \
+    -d ticketing_system \
+    -c '\dt'
+```
+
+You should see an output like this
+```
+                List of tables
+ Schema |       Name       | Type  |  Owner   
+--------+------------------+-------+----------
+ public | _sqlx_migrations | table | postgres
+ public | tickets          | table | postgres
+```
 _______________________________________________________________________________
