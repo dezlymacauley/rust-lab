@@ -3,8 +3,7 @@
 */
 
 use std::{collections::HashMap, sync::Mutex};
-
-use actix_web::{App, HttpResponse, HttpServer, Responder, get, post, web};
+use actix_web::{App, HttpResponse, HttpServer, Responder, get, post, put, delete, web};
 use serde::{Deserialize, Serialize};
 
 //_____________________________________________________________________________
@@ -17,7 +16,7 @@ use serde::{Deserialize, Serialize};
 struct Task {
     id: u32,
     title: String,
-    completed: bool
+    completed: bool,
 }
 
 // The Mutex is to ensure that only one part of the program,
@@ -26,21 +25,22 @@ type TaskStore = Mutex<HashMap<u32, Task>>;
 
 //_____________________________________________________________________________
 
-// SECTION:  Create (Post Request)
+// SECTION: Create (Post Request)
 
 #[post("/tasks")]
 async fn create_task(
-    task: web::Json,
-    data: web::Data,
+    task: web::Json<Task>,
+    data: web::Data<TaskStore>,
 ) -> impl Responder {
+    let task = task.into_inner();
     let mut tasks = data.lock().unwrap();
-    tasks.insert(task.id, task.into_inner());
+    tasks.insert(task.id, task.clone());
     HttpResponse::Created().json(task)
 }
 
 //_____________________________________________________________________________
 
-// SECTION:  Read (Get Request)
+// SECTION: Read (Get Request)
 
 #[get("/tasks")]
 async fn list_tasks(data: web::Data<TaskStore>) -> impl Responder {
@@ -48,45 +48,58 @@ async fn list_tasks(data: web::Data<TaskStore>) -> impl Responder {
     let task_list: Vec<Task> = tasks.values().cloned().collect();
     HttpResponse::Ok().json(task_list)
 }
-//_____________________________________________________________________________
-
 
 //_____________________________________________________________________________
 
+// SECTION: Update (Put Request)
 
-// #[derive(Deserialize)]
-// struct QueryParams {
-//     status: Option<String>,
-//     limit: Option<usize>
-// }
-//
-// #[get("/tasks")]
-// async fn list_tasks(query: web::Query<QueryParams>) -> impl Responder {
-//
-//     let status = query.status.as_deref().unwrap_or("all");
-//     let limit = query.limit.unwrap_or(10);
-//
-//     let message = format!("Fetching {limit} tasks with status: {status}");
-//
-//     HttpResponse::Ok().body(message)
-// }
-//
-//_____________________________________________________________________________
-
-
+#[put("/tasks/{id}")]
+async fn update_task(
+    id: web::Path<u32>,
+    task: web::Json<Task>,
+    data: web::Data<TaskStore>,
+) -> impl Responder {
+    let id = id.into_inner();
+    let mut tasks = data.lock().unwrap();
+    if let Some(existing_task) = tasks.get_mut(&id) {
+        *existing_task = task.into_inner();
+        HttpResponse::Ok().json(&*existing_task)
+    } else {
+        HttpResponse::NotFound().body("Task not found")
+    }
+}
 
 //_____________________________________________________________________________
 
+// SECTION: (Delete Request)
 
-//_____________________________________________________________________________
+#[delete("/tasks/{id}")]
+async fn delete_task(
+    id: web::Path<u32>,
+    data: web::Data<TaskStore>,
+) -> impl Responder {
+    let id = id.into_inner();
+    let mut tasks = data.lock().unwrap();
+    if tasks.remove(&id).is_some() {
+        HttpResponse::NoContent().finish()
+    } else {
+        HttpResponse::NotFound().body("Task not found")
+    }
+}
+
 //_____________________________________________________________________________
 
 #[actix_web::main]
 async fn main() {
+    let store = web::Data::new(TaskStore::new(HashMap::new()));
 
-    let actix_web_app = || {
-    App::new()
-        // .service(get_task)
+    let actix_web_app = move || {
+        App::new()
+            .app_data(store.clone())
+            .service(create_task)
+            .service(list_tasks)
+            .service(update_task)
+            .service(delete_task)
     };
 
     let ip_address: &str = "127.0.0.1";
@@ -101,8 +114,7 @@ async fn main() {
 
     println!("Starting Actix Web Server at http://{ip_address}:{port}");
 
-    match actix_web_server.await {
-        Ok(()) => {}
-        Err(error) => eprintln!("Actix Web Server failed: {error}")
+    if let Err(error) = actix_web_server.await {
+        eprintln!("Actix Web Server failed: {error}");
     }
 }
