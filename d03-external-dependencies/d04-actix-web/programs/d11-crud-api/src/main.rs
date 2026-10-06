@@ -1,10 +1,65 @@
 /*
-    ABOUT: Status Codes
+    ABOUT: CRUD API
 */
+
+use std::{collections::HashMap, sync::Mutex};
 
 use actix_web::{App, HttpResponse, HttpServer, Responder, get, post, web};
 use serde::{Deserialize, Serialize};
 
+//_____________________________________________________________________________
+
+// SECTION: Data Structures 
+
+// Serialize = Rust data → JSON
+// Deserialize = JSON → Rust data
+#[derive(Serialize, Deserialize, Clone)]
+struct Task {
+    id: u32,
+    title: String,
+    completed: bool
+}
+
+// The Mutex is to ensure that only one part of the program,
+// to be specific, one thread can access this in-memory database.
+type TaskStore = Mutex<HashMap<u32, Task>>;
+
+//_____________________________________________________________________________
+
+// SECTION:  Create (Post Request)
+
+
+
+//_____________________________________________________________________________
+
+// SECTION:  Read (Get Request)
+
+#[get("/tasks")]
+async fn list_tasks(data: web::Data<TaskStore>) -> impl Responder {
+    let tasks = data.lock().unwrap();
+    let task_list: Vec<Task> = tasks.values().cloned().collect();
+    HttpResponse::Ok().json(task_list)
+}
+//_____________________________________________________________________________
+
+
+// #[derive(Deserialize)]
+// struct QueryParams {
+//     status: Option<String>,
+//     limit: Option<usize>
+// }
+//
+// #[get("/tasks")]
+// async fn list_tasks(query: web::Query<QueryParams>) -> impl Responder {
+//
+//     let status = query.status.as_deref().unwrap_or("all");
+//     let limit = query.limit.unwrap_or(10);
+//
+//     let message = format!("Fetching {limit} tasks with status: {status}");
+//
+//     HttpResponse::Ok().body(message)
+// }
+//
 //_____________________________________________________________________________
 
 #[get("/products/{id}")]
@@ -21,15 +76,6 @@ async fn products_get_id(path_params: web::Path<u32>) -> impl Responder {
 
 //_____________________________________________________________________________
 
-#[derive(Deserialize, Serialize)]
-struct Task {
-    id: u32,
-    title: String,
-    completed: bool
-}
-
-// Serialize = Rust data → JSON
-// Deserialize = JSON → Rust data
 #[post("/tasks")]
 async fn create_task(task: web::Json<Task>) -> impl Responder {
     HttpResponse::Ok().json(task.into_inner())
@@ -57,22 +103,6 @@ async fn get_task(path_parameters: web::Path<Params>) -> impl Responder {
 
 //_____________________________________________________________________________
 
-#[derive(Deserialize)]
-struct QueryParams {
-    status: Option<String>,
-    limit: Option<usize>
-}
-
-#[get("/tasks")]
-async fn list_tasks(query: web::Query<QueryParams>) -> impl Responder {
-
-    let status = query.status.as_deref().unwrap_or("all");
-    let limit = query.limit.unwrap_or(10);
-
-    let message = format!("Fetching {limit} tasks with status: {status}");
-
-    HttpResponse::Ok().body(message)
-}
 
 //_____________________________________________________________________________
 //_____________________________________________________________________________
