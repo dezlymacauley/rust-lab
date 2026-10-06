@@ -21,6 +21,16 @@ cargo binstall --no-confirm sqlx-cli
 ```
 _______________________________________________________________________________
 
+## Objective
+
+1. Create a Postgres cluster called `postgres-workflow`
+2. Create a Postgres database inside the cluster that is 
+called `ticking_system`
+3. Create a table inside the `ticking_system` database,
+that is called `tickets`
+
+_______________________________________________________________________________
+
 Create a `compose.yaml` file to the root of your project
 ```bash
 touch compose.yaml
@@ -65,4 +75,52 @@ You should see this:
 ```
 /var/run/postgresql:5432 - accepting connections
 ```
+_______________________________________________________________________________
+
+Add these lines to the end of the `.gitignore` file at the root 
+of your project:
+
+```gitignore
+# Environment Variables
+.env
+```
+_______________________________________________________________________________
+
+Add this to the `.env` file
+```bash
+DATABASE_URL=postgres://postgres:password@localhost:5432/ticketing_system
+```
+
+Note: The `ticketing_system` database does not exist yet, and that is fine.
+_______________________________________________________________________________
+
+Use the `sqlx` cli to create the database
+```bash
+sqlx database create
+```
+
+This command will use the `DATABASE_URL` environment variable to create
+the database. If the database already exists, nothing will happen.
+_______________________________________________________________________________
+
+To see if the database was created
+```bash
+docker exec postgres-workflow psql -U postgres -x -c '\l'
+```
+_______________________________________________________________________________
+
+If you ever want to delete the database
+```bash
+sqlx database drop
+```
+_______________________________________________________________________________
+
+Note the commands `sqlx database create` and `sqlx database drop` will
+automatically read the `DATABASE_URL` variable from `.env` file. 
+
+You don't need to load the `.env` when using these commands
+_______________________________________________________________________________
+
+However I prefer to be explicity
+
 _______________________________________________________________________________
