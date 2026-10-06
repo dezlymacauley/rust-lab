@@ -28,7 +28,15 @@ type TaskStore = Mutex<HashMap<u32, Task>>;
 
 // SECTION:  Create (Post Request)
 
-
+#[post("/tasks")]
+async fn create_task(
+    task: web::Json,
+    data: web::Data,
+) -> impl Responder {
+    let mut tasks = data.lock().unwrap();
+    tasks.insert(task.id, task.into_inner());
+    HttpResponse::Created().json(task)
+}
 
 //_____________________________________________________________________________
 
@@ -40,6 +48,9 @@ async fn list_tasks(data: web::Data<TaskStore>) -> impl Responder {
     let task_list: Vec<Task> = tasks.values().cloned().collect();
     HttpResponse::Ok().json(task_list)
 }
+//_____________________________________________________________________________
+
+
 //_____________________________________________________________________________
 
 
@@ -62,44 +73,7 @@ async fn list_tasks(data: web::Data<TaskStore>) -> impl Responder {
 //
 //_____________________________________________________________________________
 
-#[get("/products/{id}")]
-async fn products_get_id(path_params: web::Path<u32>) -> impl Responder {
 
-    let id: u32 = path_params.into_inner();
-
-    if id == 18 {
-        HttpResponse::Ok().body("Task 18 found")
-    } else {
-        HttpResponse::NotFound().body("Task not found")
-    }
-}
-
-//_____________________________________________________________________________
-
-#[post("/tasks")]
-async fn create_task(task: web::Json<Task>) -> impl Responder {
-    HttpResponse::Ok().json(task.into_inner())
-}
-
-
-//_____________________________________________________________________________
-
-#[derive(Deserialize)]
-struct Params {
-    id: u32,
-    status: String
-}
-
-#[get("/tasks/{id}/{status}")]
-async fn get_task(path_parameters: web::Path<Params>) -> impl Responder {
-
-    let message = format!(
-        "Task ID: {}, Status: {}", 
-        path_parameters.id, path_parameters.status
-    );
-
-    HttpResponse::Ok().body(message)
-}
 
 //_____________________________________________________________________________
 
@@ -112,8 +86,7 @@ async fn main() {
 
     let actix_web_app = || {
     App::new()
-        .service(get_task)
-        .service(products_get_id)
+        // .service(get_task)
     };
 
     let ip_address: &str = "127.0.0.1";
