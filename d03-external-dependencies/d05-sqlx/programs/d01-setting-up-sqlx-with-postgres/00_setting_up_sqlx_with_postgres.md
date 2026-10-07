@@ -193,3 +193,28 @@ You should see an output like this
  public | tickets          | table | postgres
 ```
 _______________________________________________________________________________
+
+Add the following dependencies to your project
+
+tokio (an async runtime)
+```bash
+cargo add tokio \
+    --features full
+```
+
+sqlx (A database client)
+```bash
+cargo add sqlx \
+    --features runtime-tokio,postgres,macros,time
+```
+
+anyhow (For cleaner and more convinient error propagation)
+```bash
+cargo add anyhow
+```
+
+dotenvy (For loading variables into the environment)
+```bash
+cargo add dotenvy
+```
+_______________________________________________________________________________
