@@ -184,6 +184,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "d02"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "dotenvy",
+ "sqlx",
+ "tokio",
+]
+
+[[package]]
 name = "deranged"
 version = "0.5.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
