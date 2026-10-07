@@ -10,7 +10,7 @@ fn main() {
 
     // For this project my `.env` file only contains the following:
     // SVELTEKIT_UI_PORT=6969
-    // POSTGRES_DB_PORT=5432
+    // POSTGRES_DB_PORT=5582
 
     //_________________________________________________________________________
 
