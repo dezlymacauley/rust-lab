@@ -1,5 +1,5 @@
 [package]
-name = "d01-structs"
+name = "d06-modules-that-contain-structs"
 version = "0.1.0"
 edition = "2024"
 
