@@ -58,7 +58,7 @@ fn main() {
 
     match enemy_power_level {
         Ok(data) => {
-            println!("team_leader_id: {data}");
+            println!("enemy_power_level: {data}");
         }
         Err(error_message) => {
             println!("Error: {error_message}");
