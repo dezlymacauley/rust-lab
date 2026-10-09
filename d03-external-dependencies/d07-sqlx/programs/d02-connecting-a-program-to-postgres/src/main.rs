@@ -9,7 +9,8 @@ mod custom_functions;
 use custom_functions::establish_connection;
 use sqlx::{Pool, Postgres};
 
-fn main() -> anyhow::Result<()>  {
+#[tokio::main]
+async fn main() -> anyhow::Result<()>  {
 
     //_________________________________________________________________________
 
@@ -21,7 +22,8 @@ fn main() -> anyhow::Result<()>  {
     
     // STEP: 2 => Establish a connection to the database
    
-    let database_connection_pool: Pool<Postgres> = establish_connection(&app_config.database_url).await?
+    let _database_connection_pool: Pool<Postgres> = 
+        establish_connection(&app_config.database_url).await?;
 
     //_________________________________________________________________________
     
