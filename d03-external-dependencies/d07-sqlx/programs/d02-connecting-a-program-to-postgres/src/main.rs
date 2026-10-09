@@ -9,5 +9,7 @@ fn main() -> anyhow::Result<()>  {
 
     let app_config: AppConfig = AppConfig::new()?;
 
+    app_config.print_config();
+
     Ok(())
 }

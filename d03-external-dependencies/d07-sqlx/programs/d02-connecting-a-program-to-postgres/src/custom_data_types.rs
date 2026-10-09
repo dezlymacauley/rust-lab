@@ -21,7 +21,7 @@ impl AppConfig {
         dotenvy::from_path(absolute_path_to_dot_env_file)
             .context("Failed to load .env file")?;
 
-        println!("\nSuccessfully loaded `.env` variables\n");
+        println!("\n✅ Successfully loaded `.env` variables\n");
 
         let protocol = env::var("PROTOCOL")
             .context("PROTOCOL is not set in environment")?;
@@ -54,5 +54,15 @@ impl AppConfig {
             database_name,
             database_url,
         })
+    }
+
+    pub fn print_config(&self) {
+        println!("    protocol: {}", self.protocol);
+        println!("    user_name: {}", self.user_name);
+        println!("    password: {}", self.password);
+        println!("    host: {}", self.host);
+        println!("    port: {}", self.port);
+        println!("    database_name: {}", self.database_name);
+        println!("\n🗃️ database_url: {}\n", self.database_url);
     }
 }
