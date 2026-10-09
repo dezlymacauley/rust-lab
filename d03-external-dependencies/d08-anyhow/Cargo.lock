@@ -3,6 +3,12 @@
 version = 4
 
 [[package]]
+name = "anyhow"
+version = "1.0.104"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "330a5ed07fa54e4702c9d6c4174f74427fc0ef6e214bbd677ae50a5099946470"
+
+[[package]]
 name = "d01-reading-a-dot-toml-file-to-a-string-variable"
 version = "0.1.0"
 
@@ -17,3 +23,10 @@ version = "0.1.0"
 [[package]]
 name = "d04-error-progation"
 version = "0.1.0"
+
+[[package]]
+name = "d05-using-the-anyhow-crate-to-simplify-error-propagation"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+]
