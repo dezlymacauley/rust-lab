@@ -184,7 +184,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "d02"
+name = "d02-connecting-a-program-to-postgres"
 version = "0.1.0"
 dependencies = [
  "anyhow",
