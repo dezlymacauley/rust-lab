@@ -10,6 +10,7 @@ pub fn read_user_config() {
     match attempt_to_read_user_config {
         Ok(data) => {
             user_config_data = data.trim().to_string();
+            println!("user_config_data: {user_config_data}");
         }
         Err(error_message) => {
             eprintln!("Failed to read user_config.toml");
@@ -18,5 +19,4 @@ pub fn read_user_config() {
         }
     }
 
-    println!("user_config_data: {user_config_data}");
 }

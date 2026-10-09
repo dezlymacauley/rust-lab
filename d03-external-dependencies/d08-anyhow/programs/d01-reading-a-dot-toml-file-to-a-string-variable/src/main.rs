@@ -47,6 +47,5 @@ fn main() {
         }
     }
 
-    // This line is safe because it will never run if there is an error.
-    println!("user_config_data: {user_config_data}");
+    println!("user_config: {user_config_data}");
 }
