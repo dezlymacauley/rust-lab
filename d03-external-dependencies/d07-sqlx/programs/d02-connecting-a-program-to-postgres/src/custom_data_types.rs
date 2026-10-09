@@ -1,10 +1,11 @@
 use anyhow::Context;
 use std::env;
 
+#[allow(dead_code)]
 pub struct AppConfig {
     pub protocol: String,
     pub user_name: String,
-    pub password: String,
+    password: String,
     pub host: String,
     pub port: String,
     pub database_name: String,
@@ -12,8 +13,8 @@ pub struct AppConfig {
 }
 
 impl AppConfig {
-    /// Loads the `.env` file and reads all required environment variables,
-    /// constructing the full `database_url` dynamically.
+    /// Reads the `.env` file, loads the environment variables,
+    /// and stores the values in an `AppConfig` struct.
     pub fn new() -> anyhow::Result<Self> {
         let absolute_path_to_dot_env_file: &str =
             concat!(env!("CARGO_MANIFEST_DIR"), "/.env");
@@ -59,10 +60,20 @@ impl AppConfig {
     pub fn print_config(&self) {
         println!("    protocol: {}", self.protocol);
         println!("    user_name: {}", self.user_name);
-        println!("    password: {}", self.password);
+        println!("    password: ****",);
         println!("    host: {}", self.host);
         println!("    port: {}", self.port);
         println!("    database_name: {}", self.database_name);
-        println!("\n🗃️ database_url: {}\n", self.database_url);
+
+        let database_url = format!(
+            "{}://{}:******@{}:{}/{}",
+            self.protocol,
+            self.user_name,
+            self.host,
+            self.port,
+            self.database_name
+        );
+
+        println!("\n🗃️ database_url: {}\n", database_url);
     }
 }
