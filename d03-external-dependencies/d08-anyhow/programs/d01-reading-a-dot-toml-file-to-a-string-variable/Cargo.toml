@@ -1,5 +1,5 @@
 [package]
-name = "d01"
+name = "d01-reading-a-dot-toml-file-to-a-string-variable"
 version = "0.1.0"
 edition = "2024"
 
