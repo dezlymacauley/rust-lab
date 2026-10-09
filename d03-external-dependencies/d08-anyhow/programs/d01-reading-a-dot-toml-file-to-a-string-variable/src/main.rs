@@ -8,6 +8,13 @@
 
     [appearance]
     theme = "dark"
+
+    To test this program you can remove all `read permissions` from the file
+    to trigger and error:
+    chmod a-r src/user_config_data.toml
+
+    To add all read permissions back run:
+    chmod a+r src/user_config_data.toml
 */
 
 use std::{fs, io};
