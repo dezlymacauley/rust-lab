@@ -3,5 +3,9 @@
 version = 4
 
 [[package]]
-name = "d01"
+name = "d01-reading-a-dot-toml-file-to-a-string-variable"
+version = "0.1.0"
+
+[[package]]
+name = "d02-creating-a-function-to-read-the-config"
 version = "0.1.0"
