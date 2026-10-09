@@ -15,7 +15,9 @@ pub fn read_user_config() {
         Err(error_message) => {
             eprintln!("Failed to read user_config.toml");
             eprintln!("Error: {error_message}");
-            return;
+            // I removed the `return` here.
+            // It's not needed because there are no lines of code after
+            // the `match expression` ends.
         }
     }
 
