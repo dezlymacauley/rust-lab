@@ -2,11 +2,12 @@
     ABOUT: Connecting a program to Postgres
 */
 
-mod custom_functions;
-use custom_functions::load_dot_env_file;
+mod custom_data_types;
+use custom_data_types::AppConfig;
 
 fn main() -> anyhow::Result<()>  {
-    load_dot_env_file()?;
+
+    let app_config: AppConfig = AppConfig::new()?;
 
     Ok(())
 }
