@@ -11,5 +11,9 @@ name = "d02-creating-a-function-to-read-the-config"
 version = "0.1.0"
 
 [[package]]
-name = "d03-error-propagation"
+name = "d03-making-the-function-return-an-error"
+version = "0.1.0"
+
+[[package]]
+name = "d04-error-progation"
 version = "0.1.0"
