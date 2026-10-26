@@ -7,14 +7,19 @@
     For example:
 
     trait Shape {
+        fn print_shape_info(&self);
         fn area(&self) -> f32;
         fn perimeter(&self) -> f32;
     }
 
     This is a trait called `Shape`,
-    and it has two rules.
+    and it has three rules.
 
     1. Any struct that you attach this trait to,
+    must have a method called `print_shape_info` that does not return 
+    any data type.
+
+    2. Any struct that you attach this trait to,
     must have a method called `area` that returns an `f32` data type.
 
     3. Any struct that you attach this trait to,
@@ -22,9 +27,6 @@
 
     The inner workings of ther `area` and perimeter functions do not matter,
     as long as they satify the rules of the trait.
-
-    In simple terms, a struct that has the `trait` `Shape`,
-    must have an `area` method and a `perimeter` method.
 */
 
 trait Shape {
