@@ -1,31 +1,26 @@
-# Go Workspace Setup Guide
+# Rust Workspace Setup Guide
 _______________________________________________________________________________
 
-Create the workspace directory
+Create the project directory
 ```bash
-mkdir go-workspace
+mkdir rust-workspace
 ```
 _______________________________________________________________________________
 
-Enter the workspace directory
+Enter the project directory
 ```bash
-cd go-workspace
+cd rust-workspace
 ```
 _______________________________________________________________________________
 
-Set the project to use the latest version of `go` (Go compiler)
+Initialize the project
 ```bash
-mise use go@latest
+cargo init --vcs none
 ```
-
 #### Note:
-- If you want to use a specific version you can use mise to check
+- `--vcs none` tell cargo that I don't want a version control system to be
+setup for me. I prefer to setup git myself when I'm ready.
 
-- To get the version number of the latest available Go 
-that you can use in a project, run this command: `mise latest go`
-
-- If you want to view a list of valid Go versions that you can use,
-run this command: `mise ls-remote go`
 _______________________________________________________________________________
 
 Set the project to use the latest version of `eza` (project structure viewer)
@@ -34,226 +29,99 @@ mise use eza@latest
 ```
 _______________________________________________________________________________
 
-Update the `mise.toml` file in the project to look like this
-```toml
-[tools]
-eza = "latest"
-go = "latest"
-#______________________________________________________________________________
+Create the rest of the workspace structure
+```bash
+rm -rf src
 
-[tasks.build]
-description = "👷 Build the current program | alias = build"
-quiet = true
-run = """
-
-set -e
-name=$(basename "$MISE_ORIGINAL_CWD")
-
-if [ ! -d "programs/${name}/cmd/${name}" ]; then
-    printf "\n%s\n\n" "❌ Not inside a program. cd into a program first"
-    exit 1
-fi
-
-mkdir -p bin
-go build -o "bin/${name}" "./programs/${name}/cmd/${name}"
-printf "\n%s\n\n" "✅ Built: bin/${name}"
-
-"""
-#______________________________________________________________________________
-
-[tasks.clean]
-description = "🧼 Delete build output and cache | alias = clean"
-quiet = true
-run = """
-
-rm -rf bin
-go clean -cache
-
-"""
-#______________________________________________________________________________
-
-[tasks.format]
-description = "📜 Run the code formatter on the workspace | alias = format"
-quiet = true
-run = """
-
-gofmt -w .
-
-"""
-#______________________________________________________________________________
-
-[tasks.run-bin]
-description = "🤖 Build and run the current program's binary | alias = run-bin"
-depends = ["build"]
-quiet = true
-run = """
-
-"./bin/$(basename "$MISE_ORIGINAL_CWD")"
-
-"""
-#______________________________________________________________________________
-
-[tasks.setup]
-description = "🚀 Tidy the dependencies of every program | alias = setup"
-quiet = true
-run = """
-
-set -e
-
-for dir in programs/*/; do
-    [ -f "${dir}go.mod" ] || continue
-    (cd "$dir" && go mod tidy)
-done
-
-printf "\n%s\n\n" "✅ Dependencies are ready"
-
-"""
-#______________________________________________________________________________
-
-[tasks.structure]
-description = "🌲 View the project structure | alias = structure"
-quiet = true
-run = """
-
-eza --tree --git-ignore
-
-"""
-#______________________________________________________________________________
-
-[shell_alias]
-build = "mise run build"
-clean = "mise run clean"
-format = "mise run format"
-run = "go run ./cmd/*"
-run-bin = "mise run run-bin"
-setup = "mise run setup"
-structure = "mise run structure"
-#______________________________________________________________________________
-```
-_______________________________________________________________________________
-
-Create a `.gitignore` file
-```sh
+mkdir programs
 touch .gitignore
+touch rust-toolchain.toml
+touch rustfmt.toml
 ```
 _______________________________________________________________________________
 
 Add this to the `.gitignore` file
-
 ```gitignore
 # Build Output
-bin/
+/target/
 ```
 _______________________________________________________________________________
 
-Create a `programs` directory
-```bash
-mkdir programs
+Update the `Cargo.toml` file to look like this
+```toml
+[workspace]
+resolver = "3"
+members = [
+    "programs/*"
+]
 ```
 _______________________________________________________________________________
 
-Intialize the workspace
-```bash
-go work init
-```
+Update the `mise.toml` file in the project to look like this
+```toml
+[tools]
+eza = "latest"
+#______________________________________________________________________________
 
-#### Note:
-- This will create a `go.work` file that contains that version of Go that
-will be used in the workspace
-_______________________________________________________________________________
-
-To confirm that your workspace is using the correct version of Go, 
-run this:
-```sh
-go version
-which go
+[shell_alias]
+build = "cargo build"
+clean = "cargo clean"
+format = "cargo fmt"
+run = "cargo run --quiet"
+structure = "eza --tree --git-ignore"
+#______________________________________________________________________________
 ```
 _______________________________________________________________________________
 
-You should see an output similar to this:
+Add this to the `rust-toolchain.toml` file
+```toml
+[toolchain]
+channel = "stable"
+components = [ "rust-analyzer" ]
 ```
-go version go1.27.3 linux/amd64
-/home/dezlymacauley/.local/share/mise/installs/go/1.27.3/bin/go
+_______________________________________________________________________________
+
+Add this to the `rustfmt.toml` file
+```toml
+max_width = 80
+tab_spaces = 4
 ```
 _______________________________________________________________________________
 
 ## How to add programs to the workspace
+
 _______________________________________________________________________________
 
 In this guide I'm going to add two programs, which I will call `d01` and `d02`
 
-All of the programs in the workspace will share the same Go version.
+All of the programs in the workspace will share the same rustc version.
 _______________________________________________________________________________
 
 This is how to add the first program, `d01`
 ```bash
-mkdir -p programs/d01/cmd/d01
-touch programs/d01/cmd/d01/main.go
-
-cd programs/d01
-    go mod init d01
-cd ../..
-
-go work use ./programs/d01
+cargo new programs/d01
 ```
 _______________________________________________________________________________
 
 This is how to add the second program, `d02`
 ```bash
-mkdir -p programs/d02/cmd/d02
-touch programs/d02/cmd/d02/main.go
-
-cd programs/d02
-    go mod init d02
-cd ../..
-
-go work use ./programs/d02
+cargo new programs/d02
 ```
 _______________________________________________________________________________
 
-Add this to the `programs/d01/cmd/d01/main.go` file
-```go
-package main
-
-import "fmt"
-
-func main() {
-	fmt.Println()
-	fmt.Println("This is d01")
-	fmt.Println()
+Replace the contents of the `programs/d01/src/main.rs` file with this
+```rust
+fn main() {
+    println!("\nThis is d01\n");
 }
 ```
 _______________________________________________________________________________
 
-Add this to the `programs/d02/cmd/d02/main.go` file
-```go
-package main
-
-import "fmt"
-
-func main() {
-	fmt.Println()
-	fmt.Println("This is d02")
-	fmt.Println()
+Replace the contents of the `programs/d02/src/main.rs` file with this
+```rust
+fn main() {
+    println!("\nThis is d02\n");
 }
-```
-_______________________________________________________________________________
-
-Run this command to see the list of `mise tasks` in your project
-```bash
-mise tasks
-```
-_______________________________________________________________________________
-
-You should see an output like this
-```
-Name       Description
-build      👷 Build the current program | alias = build
-clean      🧼 Delete build output and cache | alias = clean
-format     📜 Run the code formatter on the workspace | alias = format
-run-bin    🤖 Build and run the current program's binary | alias = run-bin
-setup      🚀 Tidy the dependencies of every program | alias = setup
-structure  🌲 View the project structure | alias = structure
 ```
 _______________________________________________________________________________
 
@@ -265,19 +133,39 @@ structure
 This should be the structure
 ```
 .
-├── go.work
+├── Cargo.lock
+├── Cargo.toml
 ├── mise.toml
-└── programs
-    ├── d01
-    │   ├── cmd
-    │   │   └── d01
-    │   │       └── main.go
-    │   └── go.mod
-    └── d02
-        ├── cmd
-        │   └── d02
-        │       └── main.go
-        └── go.mod
+├── programs
+│   ├── d01
+│   │   ├── Cargo.toml
+│   │   └── src
+│   │       └── main.rs
+│   └── d02
+│       ├── Cargo.toml
+│       └── src
+│           └── main.rs
+├── rust-toolchain.toml
+├── rustfmt.toml
+└── src
+    └── main.rs
+```
+_______________________________________________________________________________
+
+To view the list of shell aliases that were declared in the `[shell_alias]`
+section of the `mise.toml` file, just run this command
+```bash
+mise shell-alias ls
+```
+
+You should see this output
+```
+alias     command
+build     cargo build
+clean     cargo clean
+format    cargo fmt
+run       cargo run --quiet
+structure eza --tree --git-ignore
 ```
 _______________________________________________________________________________
 
@@ -288,26 +176,5 @@ E.g. To run the program `d01`
 ```bash
 cd programs/d01
 run
-```
-_______________________________________________________________________________
-
-To build a program, 
-navigate to its directory and use the `build` command
-
-E.g. To build the program `d01`
-```bash
-cd programs/d01
-build
-```
-#### Note:
-- I've set this up so that all of built programs, 
-are stored in the `bin` directory at the root of the workspace.
-_______________________________________________________________________________
-
-To build a program and run the built binary, 
-navigate to its directory and use the `run-bin` command
-```bash
-cd programs/d01
-run-bin
 ```
 _______________________________________________________________________________

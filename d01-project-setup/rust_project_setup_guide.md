@@ -29,6 +29,21 @@ mise use eza@latest
 ```
 _______________________________________________________________________________
 
+Create the rest of the project structure
+```bash
+touch .gitignore
+touch rust-toolchain.toml
+touch rustfmt.toml
+```
+_______________________________________________________________________________
+
+Add this to the `.gitignore` file
+```gitignore
+# Build Output
+/target/
+```
+_______________________________________________________________________________
+
 Update the `mise.toml` file in the project to look like this
 ```toml
 [tools]
@@ -45,36 +60,11 @@ structure = "eza --tree --git-ignore"
 ```
 _______________________________________________________________________________
 
-Create a `.gitignore` file
-```sh
-touch .gitignore
-```
-_______________________________________________________________________________
-
-Add this to the `.gitignore` file
-```gitignore
-# Build Output
-/target/
-```
-_______________________________________________________________________________
-
-Create a `rust-toolchain.toml` file
-```bash
-touch rust-toolchain.toml
-```
-_______________________________________________________________________________
-
 Add this to the `rust-toolchain.toml` file
 ```toml
 [toolchain]
 channel = "stable"
 components = [ "rust-analyzer" ]
-```
-_______________________________________________________________________________
-
-Create a `rustfmt.toml` file
-```bash
-touch rustfmt.toml
 ```
 _______________________________________________________________________________
 
