@@ -38,17 +38,12 @@ struct Square {
     color: String,
 }
 
-// This is how you add a trait to struct
-impl Shape for Square {
-    fn area(&self) -> f32 {
-        let area_of_square = self.side * self.side;
-        println!("area_of_square: {area_of_square}");
-        area_of_square
-    }
-}
-
 // The constructor function goes into a regular `impl` block
 // because each struct requires specific parameters to create an instance.
+
+// The print info function also goes into the regular `impl` block
+// because it needs to print out the specific fields that make up 
+// that instance.
 impl Square {
     fn new(side: f32, line_width: u8, color: &str) -> Self {
         Self {
@@ -56,6 +51,19 @@ impl Square {
             line_width: line_width,
             color: color.to_string(),
         }
+    }
+}
+
+// This is how you add a trait to struct
+impl Shape for Square {
+    fn area(&self) -> f32 {
+        let area_of_square = self.side * self.side;
+        area_of_square
+    }
+
+    fn perimeter(&self) -> f32 {
+        let perimeter_of_square = self.side * 4.0;
+        perimeter_of_square 
     }
 }
 
@@ -80,8 +88,12 @@ impl Rectangle {
 impl Shape for Rectangle {
     fn area(&self) -> f32 {
         let area_of_rectangle = self.length * self.width;
-        println!("area_of_rectangle: {area_of_rectangle}");
         area_of_rectangle
+    }
+
+    fn perimeter(&self) -> f32 {
+        let perimeter_of_rectangle = (self.length * 2.0) + (self.width * 2.0);
+        perimeter_of_rectangle
     }
 }
 
@@ -89,6 +101,9 @@ fn main() {
     let square_a: Square = Square::new(6.25, 2, "red");
     let rectangle_a: Rectangle = Rectangle::new(4.25, 5.75, 3, "blue");
 
-    square_a.area();
-    rectangle_a.area();
+    println!("area of square_a: {}", square_a.area());
+    println!("area of rectangle_a: {}", rectangle_a.area());
+
+    println!("perimeter of square_a: {}", square_a.perimeter());
+    println!("perimeter of rectangle_a: {}", rectangle_a.perimeter());
 }
