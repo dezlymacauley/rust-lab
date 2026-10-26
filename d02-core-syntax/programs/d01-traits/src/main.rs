@@ -28,6 +28,7 @@
 */
 
 trait Shape {
+    fn print_shape_info(&self);
     fn area(&self) -> f32;
     fn perimeter(&self) -> f32;
 }
@@ -42,7 +43,7 @@ struct Square {
 // because each struct requires specific parameters to create an instance.
 
 // The print info function also goes into the regular `impl` block
-// because it needs to print out the specific fields that make up 
+// because it needs to print out the specific fields that make up
 // that instance.
 impl Square {
     fn new(side: f32, line_width: u8, color: &str) -> Self {
@@ -56,6 +57,14 @@ impl Square {
 
 // This is how you add a trait to struct
 impl Shape for Square {
+    fn print_shape_info(&self) {
+        println!();
+        println!("Square:");
+        println!("  side:       {}", self.side);
+        println!("  line_width: {}", self.line_width);
+        println!("  color:      {}", self.color);
+    }
+
     fn area(&self) -> f32 {
         let area_of_square = self.side * self.side;
         area_of_square
@@ -63,7 +72,7 @@ impl Shape for Square {
 
     fn perimeter(&self) -> f32 {
         let perimeter_of_square = self.side * 4.0;
-        perimeter_of_square 
+        perimeter_of_square
     }
 }
 
@@ -86,6 +95,15 @@ impl Rectangle {
 }
 
 impl Shape for Rectangle {
+    fn print_shape_info(&self) {
+        println!();
+        println!("Rectangle:");
+        println!("  length:     {}", self.length);
+        println!("  width:      {}", self.width);
+        println!("  line_width: {}", self.line_width);
+        println!("  color:      {}", self.color);
+    }
+
     fn area(&self) -> f32 {
         let area_of_rectangle = self.length * self.width;
         area_of_rectangle
@@ -101,9 +119,13 @@ fn main() {
     let square_a: Square = Square::new(6.25, 2, "red");
     let rectangle_a: Rectangle = Rectangle::new(4.25, 5.75, 3, "blue");
 
-    println!("area of square_a: {}", square_a.area());
-    println!("area of rectangle_a: {}", rectangle_a.area());
+    square_a.print_shape_info();
+    rectangle_a.print_shape_info();
 
-    println!("perimeter of square_a: {}", square_a.perimeter());
-    println!("perimeter of rectangle_a: {}", rectangle_a.perimeter());
+    println!("\narea of square_a: {}", square_a.area());
+    println!("\narea of rectangle_a: {}", rectangle_a.area());
+
+    println!("\nperimeter of square_a: {}", square_a.perimeter());
+    println!("\nperimeter of rectangle_a: {}", rectangle_a.perimeter());
+
 }
