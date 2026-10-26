@@ -4,6 +4,8 @@
     Think of a trait as a block that defines one or more flexible rules.
     A trait can be attached to multiple structs.
 
+    ___________________________________________________________________________
+
     For example:
 
     trait Shape {
@@ -27,6 +29,16 @@
 
     The inner workings of ther `area` and perimeter functions do not matter,
     as long as they satify the rules of the trait.
+
+    ___________________________________________________________________________
+
+    The benefits of a trait is that it allows you to create uniform API
+    across different structs that should have similar functionality.
+
+    It ensures that each struct has methods that are spelled the same way,
+    and return the same data type. 
+
+    ___________________________________________________________________________
 */
 
 trait Shape {
@@ -39,22 +51,6 @@ struct Square {
     side: f32,
     line_width: u8,
     color: String,
-}
-
-// The constructor function goes into a regular `impl` block
-// because each struct requires specific parameters to create an instance.
-
-// The print info function also goes into the regular `impl` block
-// because it needs to print out the specific fields that make up
-// that instance.
-impl Square {
-    fn new(side: f32, line_width: u8, color: &str) -> Self {
-        Self {
-            side: side,
-            line_width: line_width,
-            color: color.to_string(),
-        }
-    }
 }
 
 // This is how you add a trait to struct
@@ -78,22 +74,24 @@ impl Shape for Square {
     }
 }
 
+// The constructor function goes into a regular `impl` block
+// because each struct requires specific parameters to create an instance
+// of a specific struct
+impl Square {
+    fn new(side: f32, line_width: u8, color: &str) -> Self {
+        Self {
+            side: side,
+            line_width: line_width,
+            color: color.to_string(),
+        }
+    }
+}
+
 struct Rectangle {
     length: f32,
     width: f32,
     line_width: u8,
     color: String,
-}
-
-impl Rectangle {
-    fn new(length: f32, width: f32, line_width: u8, color: &str) -> Self {
-        Self {
-            length: length,
-            width: width,
-            line_width: line_width,
-            color: color.to_string(),
-        }
-    }
 }
 
 impl Shape for Rectangle {
@@ -116,6 +114,18 @@ impl Shape for Rectangle {
         perimeter_of_rectangle
     }
 }
+
+impl Rectangle {
+    fn new(length: f32, width: f32, line_width: u8, color: &str) -> Self {
+        Self {
+            length: length,
+            width: width,
+            line_width: line_width,
+            color: color.to_string(),
+        }
+    }
+}
+
 
 fn main() {
     let square_a: Square = Square::new(6.25, 2, "red");
