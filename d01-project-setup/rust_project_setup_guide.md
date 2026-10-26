@@ -1,11 +1,15 @@
 # Rust Project Setup Guide
 _______________________________________________________________________________
 
-### Create the project directory and enter it
+Create the project directory
+```bash
+mkdir rust-project
+```
 _______________________________________________________________________________
 
+Enter the project directory
 ```bash
-mkdir rust-project && cd rust-project 
+cd rust-project
 ```
 _______________________________________________________________________________
 
@@ -13,21 +17,37 @@ Initialize the project
 ```bash
 cargo init --vcs none
 ```
-
-Note:
+#### Note:
 - `--vcs none` tell cargo that I don't want a version control system to be
 setup for me. I prefer to setup git myself when I'm ready.
+
 _______________________________________________________________________________
 
-### Create the rest of the project structure
-
+Set the project to use the latest version of `eza` (project structure viewer)
 ```bash
-touch .gitignore
-touch rust-toolchain.toml
-touch rustfmt.toml
+mise use eza@latest
+```
+_______________________________________________________________________________
 
-mkdir .cargo
-touch .cargo/config.toml
+Update the `mise.toml` file in the project to look like this
+```toml
+[tools]
+eza = "latest"
+#______________________________________________________________________________
+
+[shell_alias]
+build = "cargo build"
+clean = "cargo clean"
+format = "cargo fmt"
+run = "cargo run --quiet"
+structure = "eza --tree --git-ignore"
+#______________________________________________________________________________
+```
+_______________________________________________________________________________
+
+Create a `.gitignore` file
+```sh
+touch .gitignore
 ```
 _______________________________________________________________________________
 
@@ -35,6 +55,12 @@ Add this to the `.gitignore` file
 ```gitignore
 # Build Output
 /target/
+```
+_______________________________________________________________________________
+
+Create a `rust-toolchain.toml` file
+```bash
+touch rust-toolchain.toml
 ```
 _______________________________________________________________________________
 
@@ -46,21 +72,17 @@ components = [ "rust-analyzer" ]
 ```
 _______________________________________________________________________________
 
+Create a `rustfmt.toml` file
+```bash
+touch rustfmt.toml
+```
+_______________________________________________________________________________
+
 Add this to the `rustfmt.toml` file
 ```toml
 max_width = 80
 tab_spaces = 4
 ```
-_______________________________________________________________________________
-
-Add this to the `.cargo/config.toml` file
-```toml
-[alias]
-dev = "run --quiet"
-```
-
-Note:
-- Now `cargo dev` is the same as `cargo run --quiet`
 _______________________________________________________________________________
 
 Replace the contents of the `src/main.rs` file with this
@@ -71,24 +93,43 @@ fn main() {
 ```
 _______________________________________________________________________________
 
-### Build the program (Create an executable binary)
-
+To view the project structure
 ```bash
-cargo build
+structure
+```
+
+This should be the structure
+```
+.
+├── Cargo.lock
+├── Cargo.toml
+├── mise.toml
+├── rust-toolchain.toml
+├── rustfmt.toml
+└── src
+    └── main.rs
 ```
 _______________________________________________________________________________
 
-### Run the program (Run the executable binary)
-
+To view the list of shell aliases that were declared in the `[shell_alias]`
+section of the `mise.toml` file, just run this command
 ```bash
-cargo dev
+mise shell-alias ls
+```
+
+You should see this output
+```
+alias     command
+build     cargo build
+clean     cargo clean
+format    cargo fmt
+run       cargo run --quiet
+structure eza --tree --git-ignore
 ```
 _______________________________________________________________________________
 
-Note:
-- `cargo` has a built-in `clean` command to delete the `target` directory
-
+To run the project, all you need is one command:
 ```bash
-cargo clean
+run
 ```
 _______________________________________________________________________________

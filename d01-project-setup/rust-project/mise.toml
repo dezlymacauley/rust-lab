@@ -1,0 +1,11 @@
+[tools]
+eza = "latest"
+#______________________________________________________________________________
+
+[shell_alias]
+build = "cargo build"
+clean = "cargo clean"
+format = "cargo fmt"
+run = "cargo run --quiet"
+structure = "eza --tree --git-ignore"
+#______________________________________________________________________________

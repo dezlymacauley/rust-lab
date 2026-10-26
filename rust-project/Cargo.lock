@@ -3,9 +3,5 @@
 version = 4
 
 [[package]]
-name = "d01-topic-one"
-version = "0.1.0"
-
-[[package]]
-name = "d02-topic-two"
+name = "rust-project"
 version = "0.1.0"
