@@ -3,9 +3,5 @@
 version = 4
 
 [[package]]
-name = "d01-traits"
-version = "0.1.0"
-
-[[package]]
-name = "d02"
+name = "d01-declaring-a-trait"
 version = "0.1.0"
