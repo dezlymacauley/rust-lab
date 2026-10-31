@@ -1,5 +1,5 @@
 [package]
-name = "d01-declaring-a-trait"
+name = "d01-introduction-to-traits"
 version = "0.1.0"
 edition = "2024"
 
