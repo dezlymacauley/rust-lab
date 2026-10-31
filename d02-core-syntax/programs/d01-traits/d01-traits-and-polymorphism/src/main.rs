@@ -20,19 +20,7 @@
     ___________________________________________________________________________
 */
 
-// Adding this to silence the warning regarding unused code in this file
-#![allow(dead_code)]
-
-//_____________________________________________________________________________
-
-// SECTION: Archer Declaration
-
-struct Archer {
-    name: String,
-    health: u32,
-    arrow_damage: u32,
-    arrows: u32,
-}
+#![allow(dead_code, unused_variables)]
 
 //_____________________________________________________________________________
 
@@ -58,4 +46,18 @@ struct Samurai {
 
 //_____________________________________________________________________________
 
-fn main() {}
+fn main() {
+    let samurai_one: Samurai = Samurai {
+        name: String::from("Kevin"),
+        health: 100,
+        sword_damage: 4522,
+        blade_sharpness: 100,
+    };
+
+    let mage_one: Mage = Mage {
+        name: String::from("Cassie"),
+        health: 100,
+        spell_damage: 6521,
+        magic_pool: 100,
+    };
+}
