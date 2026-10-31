@@ -1,15 +1,17 @@
 /*
-    ABOUT: Introduction to polymorphism 
+    ABOUT: Introduction to polymorphism
 
     ___________________________________________________________________________
 
     The word polymorphism comes from two greek words: `poly` and `morph`:
 
-    `poly` means many 
+    `poly` means many
 
     `morph` means forms
 
     So therefore polymorphism means `many forms`
+    ___________________________________________________________________________
+   
     ___________________________________________________________________________
 
     You can use polymorphism in your Rust programs by using a mechanism
@@ -27,7 +29,7 @@
 // Think of the `Mage` and `Samurai` structs as templates for creating
 // a specific type of playable character in a game.
 
-// Think of a `trait` as a membership card that can be given 
+// Think of a `trait` as a membership card that can be given
 // to multiple data types in Rust.
 
 // This membership card contains a set of rules that each member of the group
@@ -73,10 +75,15 @@ impl Mage {
             energy_level,
         }
     }
+}
 
-    fn magic_attack_damage(&self) {
+// This is how you implement a trait
+// Think of this as giving a `PlayableCharacter` membership card,
+// to the `Mage` struct
+impl PlayableCharacter for Mage {
+    fn attack_damage(&self) -> u32 {
         let magic_attack_damage: u32 = self.spell_strength + self.energy_level;
-        println!("Magic Attack Damage: {}", magic_attack_damage);
+        magic_attack_damage
     }
 }
 
@@ -105,11 +112,12 @@ impl Samurai {
             blade_condition,
         }
     }
+}
 
-    fn sword_attack_damage(&self) -> u32 {
+impl PlayableCharacter for Samurai {
+    fn attack_damage(&self) -> u32 {
         let sword_attack_damage: u32 =
             self.sword_strength + self.blade_condition;
-
         sword_attack_damage
     }
 }
@@ -121,10 +129,14 @@ fn main() {
     let mage_one: Mage = Mage::new("Cassie", 100, 6521, 100);
 
     println!(
-        "Sword attack damage: {}",
-        samurai_one.sword_attack_damage()
+        "{} has a sword attack damage of {}",
+        samurai_one.name,
+        samurai_one.attack_damage()
     );
 
-    mage_one.magic_attack_damage();
-
+    println!(
+        "{} has a magic attack damage of {}",
+        mage_one.name,
+        mage_one.attack_damage()
+    );
 }
