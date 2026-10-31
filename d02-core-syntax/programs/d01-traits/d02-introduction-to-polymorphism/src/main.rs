@@ -1,39 +1,52 @@
 /*
-    ABOUT: Starting Example
+    ABOUT: Introduction to polymorphism 
 
     ___________________________________________________________________________
 
-    Before I explain what `polymorphism` is,
-    or what a `trait` is, I'm going to start off with a simple example
-    that does NOT use either of these concepts.
+    The word polymorphism comes from two greek words: `poly` and `morph`:
+
+    `poly` means many 
+
+    `morph` means forms
+
+    So therefore polymorphism means `many forms`
     ___________________________________________________________________________
 
-    There are two structs: `Mage` and `Samurai`
-
-    These structs are used to define the two playable character
-    types in a game.
-
-    ___________________________________________________________________________
-
-    Each of struct has a method to calculate the attack damage
-    of that specific player type.
-
-    The Mage struct has:
-    fn calculate_magic_attack_damage(&self)
-
-    The Samurai struct has:
-    fn calculate_sword_attack_damage(&self) -> u32
-
-    ___________________________________________________________________________
-
-    1. Both of these methods have different names
-    2. These methods also have different return types.
-
+    You can use polymorphism in your Rust programs by using a mechanism
+    called a trait
     ___________________________________________________________________________
 
 */
 
 #![allow(dead_code, unused_variables)]
+
+//_____________________________________________________________________________
+
+// SECTION: Trait Declaration
+
+// Think of the `Mage` and `Samurai` structs as templates for creating
+// a specific type of playable character in a game.
+
+// Think of a `trait` as a membership card that can be given 
+// to multiple data types in Rust.
+
+// This membership card contains a set of rules that each member of the group
+// must follow.
+
+// E.g. I want to create a trait called `PlayableCharacter` and any
+// data type that has this membership card must have a method to calculate
+// their attack damage
+
+// member
+// This is a `trait` called `PlayableCharacter`
+//
+//
+// Anything data type that has this membership card,
+// must have a method called `attack_damage` that returns a u32
+// The logic inside the `attack_damage` function does not matter.
+trait PlayableCharacter {
+    fn attack_damage(&self) -> u32;
+}
 
 //_____________________________________________________________________________
 
@@ -61,7 +74,7 @@ impl Mage {
         }
     }
 
-    fn calculate_magic_attack_damage(&self) {
+    fn magic_attack_damage(&self) {
         let magic_attack_damage: u32 = self.spell_strength + self.energy_level;
         println!("Magic Attack Damage: {}", magic_attack_damage);
     }
@@ -93,7 +106,7 @@ impl Samurai {
         }
     }
 
-    fn calculate_sword_attack_damage(&self) -> u32 {
+    fn sword_attack_damage(&self) -> u32 {
         let sword_attack_damage: u32 =
             self.sword_strength + self.blade_condition;
 
@@ -106,4 +119,12 @@ impl Samurai {
 fn main() {
     let samurai_one: Samurai = Samurai::new("Kevin", 100, 4522, 100);
     let mage_one: Mage = Mage::new("Cassie", 100, 6521, 100);
+
+    println!(
+        "Sword attack damage: {}",
+        samurai_one.sword_attack_damage()
+    );
+
+    mage_one.magic_attack_damage();
+
 }

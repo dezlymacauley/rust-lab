@@ -19,10 +19,10 @@
     of that specific player type.
 
     The Mage struct has:
-    fn calculate_magic_attack_damage(&self)
+    fn magic_attack_damage(&self)
 
     The Samurai struct has:
-    fn calculate_sword_attack_damage(&self) -> u32
+    fn sword_attack_damage(&self) -> u32
 
     ___________________________________________________________________________
 
@@ -61,7 +61,7 @@ impl Mage {
         }
     }
 
-    fn calculate_magic_attack_damage(&self) {
+    fn magic_attack_damage(&self) {
         let magic_attack_damage: u32 = self.spell_strength + self.energy_level;
         println!("Magic Attack Damage: {}", magic_attack_damage);
     }
@@ -93,7 +93,7 @@ impl Samurai {
         }
     }
 
-    fn calculate_sword_attack_damage(&self) -> u32 {
+    fn sword_attack_damage(&self) -> u32 {
         let sword_attack_damage: u32 =
             self.sword_strength + self.blade_condition;
 
@@ -106,4 +106,12 @@ impl Samurai {
 fn main() {
     let samurai_one: Samurai = Samurai::new("Kevin", 100, 4522, 100);
     let mage_one: Mage = Mage::new("Cassie", 100, 6521, 100);
+
+    println!(
+        "Sword attack damage: {}",
+        samurai_one.sword_attack_damage()
+    );
+
+    mage_one.magic_attack_damage();
+
 }
