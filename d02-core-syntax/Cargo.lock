@@ -3,5 +3,9 @@
 version = 4
 
 [[package]]
-name = "d01-traits-and-polymorphism"
+name = "d01-starting-example"
+version = "0.1.0"
+
+[[package]]
+name = "d02-introduction-to-polymorphism"
 version = "0.1.0"
