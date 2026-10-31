@@ -29,9 +29,10 @@
 struct Mage {
     name: String,
     health: u32,
-    spell_damage: u32,
-    magic_pool: u32,
+    spell_strength: u32,
+    energy_level: u32,
 }
+
 
 //_____________________________________________________________________________
 
@@ -40,8 +41,8 @@ struct Mage {
 struct Samurai {
     name: String,
     health: u32,
-    sword_damage: u32,
-    blade_sharpness: u32,
+    sword_strength: u32,
+    blade_condition: u32,
 }
 
 //_____________________________________________________________________________
@@ -50,14 +51,14 @@ fn main() {
     let samurai_one: Samurai = Samurai {
         name: String::from("Kevin"),
         health: 100,
-        sword_damage: 4522,
-        blade_sharpness: 100,
+        sword_strength: 4522,
+        blade_condition: 100,
     };
 
     let mage_one: Mage = Mage {
         name: String::from("Cassie"),
         health: 100,
-        spell_damage: 6521,
-        magic_pool: 100,
+        spell_strength: 6521,
+        energy_level: 100
     };
 }
