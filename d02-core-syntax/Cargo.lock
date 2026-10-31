@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "d01-introduction-to-traits"
+name = "d01-traits-and-polymorphism"
 version = "0.1.0"

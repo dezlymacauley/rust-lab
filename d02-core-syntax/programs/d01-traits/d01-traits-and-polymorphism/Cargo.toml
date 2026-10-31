@@ -1,5 +1,5 @@
 [package]
-name = "d01-introduction-to-traits"
+name = "d01-traits-and-polymorphism"
 version = "0.1.0"
 edition = "2024"
 
