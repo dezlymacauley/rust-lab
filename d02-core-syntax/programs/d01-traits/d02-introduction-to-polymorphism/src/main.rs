@@ -12,8 +12,6 @@
     So therefore polymorphism means `many forms`
     ___________________________________________________________________________
    
-    ___________________________________________________________________________
-
     You can use polymorphism in your Rust programs by using a mechanism
     called a trait
     ___________________________________________________________________________

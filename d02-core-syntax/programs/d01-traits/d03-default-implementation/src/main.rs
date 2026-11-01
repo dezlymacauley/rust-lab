@@ -1,20 +1,5 @@
 /*
-    ABOUT: Introduction to polymorphism
-
-    ___________________________________________________________________________
-
-    The word polymorphism comes from two greek words: `poly` and `morph`:
-
-    `poly` means many
-
-    `morph` means forms
-
-    So therefore polymorphism means `many forms`
-    ___________________________________________________________________________
-   
-    You can use polymorphism in your Rust programs by using a mechanism
-    called a trait
-    ___________________________________________________________________________
+    ABOUT: Default implementation
 
 */
 
@@ -24,28 +9,25 @@
 
 // SECTION: Trait Declaration
 
-// Think of the `Mage` and `Samurai` structs as templates for creating
-// a specific type of playable character in a game.
-
-// Think of a `trait` as a membership card that can be given
-// to multiple data types in Rust.
-
-// This membership card contains a set of rules that each member of the group
-// must follow.
-
-// E.g. I want to create a trait called `PlayableCharacter` and any
-// data type that has this membership card must have a method to calculate
-// their attack damage
-
-// member
-// This is a `trait` called `PlayableCharacter`
-//
-//
-// Anything data type that has this membership card,
-// must have a method called `attack_damage` that returns a u32
-// The logic inside the `attack_damage` function does not matter.
 trait PlayableCharacter {
     fn attack_damage(&self) -> u32;
+
+    // NOTE: This is a default implementation
+
+    // You can tell that it is a default implementation because this it not
+    // just a function signature, but a fully implemented method. 
+
+    // Another difference is that a data type that is part of 
+    // the `PlayableCharacter` group is considered valid even if it doesn't
+    // have this method (unlike `attack_damage` which is required.)
+
+    // This is useful because every PlayableCharacter will have a default
+    // taunt.
+
+    fn taunt_enemy(&self) {
+        println!("Is that all you've got? Pathetic!");
+    }
+
 }
 
 //_____________________________________________________________________________
@@ -75,9 +57,6 @@ impl Mage {
     }
 }
 
-// This is how you implement a trait
-// Think of this as giving a `PlayableCharacter` membership card,
-// to the `Mage` struct
 impl PlayableCharacter for Mage {
     fn attack_damage(&self) -> u32 {
         let magic_attack_damage: u32 = self.spell_strength + self.energy_level;
@@ -126,15 +105,6 @@ fn main() {
     let samurai_one: Samurai = Samurai::new("Kevin", 100, 4522, 100);
     let mage_one: Mage = Mage::new("Cassie", 100, 6521, 100);
 
-    println!(
-        "{} has a sword attack damage of {}",
-        samurai_one.name,
-        samurai_one.attack_damage()
-    );
-
-    println!(
-        "{} has a magic attack damage of {}",
-        mage_one.name,
-        mage_one.attack_damage()
-    );
+    samurai_one.taunt_enemy();
+    mage_one.taunt_enemy();
 }
