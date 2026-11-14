@@ -17,3 +17,7 @@ version = "0.1.0"
 [[package]]
 name = "d04-overriding-the-default-implementation"
 version = "0.1.0"
+
+[[package]]
+name = "d05-trait-bounds"
+version = "0.1.0"
