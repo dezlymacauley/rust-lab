@@ -8,7 +8,10 @@
 set -euo pipefail
 
 : "${PGDATA:?Missing environment variable PGDATA}"
-: "${POSTGRES_PASSWORD:?Missing environment variable POSTGRES_PASSWORD}"
+
+: "${PGPASSWORD:?Missing environment variable PGPASSWORD}"
+: "${PGHOST:?Missing environment variable PGHOST}"
+: "${PGPORT:?Missing environment variable PGPORT}"
 #______________________________________________________________________________
 
 # STEP: 2 => Check if there is an existing PGDATA directory
@@ -61,7 +64,7 @@ umask 077
 password_file="$(mktemp)"
 trap 'rm -f -- "$password_file"' EXIT
 
-printf '%s\n' "$POSTGRES_PASSWORD" > "$password_file"
+printf '%s\n' "$PGPASSWORD" > "$password_file"
 
 if ! initdb \
     -D "$PGDATA" \
@@ -73,18 +76,12 @@ if ! initdb \
     exit 1
 fi
 
-# Disable checkpoint logging to reduce terminal noise.
-printf "log_checkpoints = off\n" >> "$PGDATA/postgresql.conf"
+# Configure the PostgreSQL server's listening address and port.
+{
+    printf "listen_addresses = '%s'\n" "$PGHOST"
+    printf "port = %s\n" "$PGPORT"
+    printf "log_checkpoints = off\n"
+} >> "$PGDATA/postgresql.conf"
 
-printf "✅ Postgres cluster initialized.\n"
-#______________________________________________________________________________
-
-# STEP: 4 => Start the Postgres server
-
-printf "\n"
-printf "⏳ Starting the Postgres server...\n"
-
-pg_ctl -D "$PGDATA" -l "$PGDATA/server.log" start -w > /dev/null
-
-printf "✅ Postgres server started successfully.\n"
+printf "✅ Postgres cluster initialized.\n\n"
 #______________________________________________________________________________
