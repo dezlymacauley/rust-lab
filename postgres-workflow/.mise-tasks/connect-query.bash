@@ -8,13 +8,12 @@
 set -euo pipefail
 
 : "${PGDATA:?Missing environment variable PGDATA}"
+: "${PGUSER:?Missing environment variable PGUSER}"
+: "${PGPASSWORD:?Missing environment variable PGPASSWORD}"
 : "${PGHOST:?Missing environment variable PGHOST}"
 : "${PGPORT:?Missing environment variable PGPORT}"
+: "${PGDATABASE:?Missing environment variable PGDATABASE}"
 : "${PGCLI_CONFIG_FILE:?Missing environment variable PGCLI_CONFIG_FILE}"
-: "${DATABASE_NAME:?Missing environment variable DATABASE_NAME}"
-: "${USER_NAME:?Missing environment variable USER_NAME}"
-: "${USER_PASSWORD:?Missing environment variable USER_PASSWORD}"
-: "${POSTGRES_PASSWORD:?Missing environment variable POSTGRES_PASSWORD}"
 
 if [[ ! -f "$PGDATA/PG_VERSION" ]]; then
     printf "❌ No valid Postgres cluster was found.\n" >&2
@@ -33,10 +32,10 @@ printf "\n"
 printf "⏳ Checking database and user...\n"
 
 existence_check="$(
-    PGPASSWORD="$POSTGRES_PASSWORD" psql \
+    psql \
         --host="$PGHOST" \
         --port="$PGPORT" \
-        --username=postgres \
+        --username="$PGUSER" \
         --dbname=postgres \
         --no-psqlrc \
         --no-password \
@@ -44,8 +43,8 @@ existence_check="$(
         --tuples-only \
         --no-align \
         --set=ON_ERROR_STOP=1 \
-        --set="database_name=$DATABASE_NAME" \
-        --set="user_name=$USER_NAME" \
+        --set="database_name=$PGDATABASE" \
+        --set="user_name=$PGUSER" \
         --file=- <<'SQL'
             SELECT
                 EXISTS (
@@ -62,12 +61,12 @@ SQL
 IFS='|' read -r database_exists user_exists <<< "$existence_check"
 
 if [[ "$database_exists" != "t" ]]; then
-    printf "❌ Database '%s' does not exist.\n" "$DATABASE_NAME" >&2
+    printf "❌ Database '%s' does not exist.\n" "$PGDATABASE" >&2
     exit 1
 fi
 
 if [[ "$user_exists" != "t" ]]; then
-    printf "❌ User '%s' does not exist.\n" "$USER_NAME" >&2
+    printf "❌ User '%s' does not exist.\n" "$PGUSER" >&2
     exit 1
 fi
 #______________________________________________________________________________
@@ -77,11 +76,11 @@ fi
 printf "\n"
 printf "⏳ Connecting to Postgres...\n"
 
-PGPASSWORD="$USER_PASSWORD" exec pgcli \
+exec pgcli \
     --pgclirc "$PGCLI_CONFIG_FILE" \
     --host "$PGHOST" \
     --port "$PGPORT" \
-    --username "$USER_NAME" \
-    --dbname "$DATABASE_NAME" \
+    --username "$PGUSER" \
+    --dbname "$PGDATABASE" \
     --no-password
 #______________________________________________________________________________
