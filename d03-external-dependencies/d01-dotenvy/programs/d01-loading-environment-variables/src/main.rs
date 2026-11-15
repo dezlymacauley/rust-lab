@@ -22,6 +22,7 @@
 
 // SECTION: 1 => Standard Library Imports
 
+use std::env;
 use std::path::PathBuf;
 
 //_____________________________________________________________________________
@@ -38,29 +39,52 @@ fn main() {
     //_________________________________________________________________________
 
     // STEP: 2 => Get the absolute path to the `.env` file
-    
+
     let file_path_of_dot_env: PathBuf = project_root.join(".env");
     // println!("dot_env_file_path: {}", dot_env_file_path.display());
     //_________________________________________________________________________
-    
+
     // STEP: 3 => Load the environment variables from the `.env` file
 
-    // `dotenvy` will be used to load the environment variables listed in
-    // the `.env` file into the process environment. 
+    // `dotenvy` will be used for loading environment variables listed
+    // in a `.env` file into the process environment,
+    // so that they can be stored as Rust variables.
 
-    // let dotenvy_status: Result<(), dotenvy::Error> =
-    //     dotenvy::from_path(file_path_of_dot_env);
-    //
-    // match dotenvy_status {
-    //     Ok(()) => {
-    //         println!("\nSuccessfully loaded `.env` variables\n");
-    //     }
-    //     Err(error_message) => {
-    //         println!("\nFailed to load `.env` variables: {error_message}\n");
-    //         // Exit the program after showing the error message above.
-    //         return;
-    //     }
-    // }
+    let dotenvy_status: Result<(), dotenvy::Error> =
+        dotenvy::from_path(file_path_of_dot_env);
+
+    match dotenvy_status {
+        Ok(()) => {
+            println!("\n✅ Successfully loaded `.env` variables\n");
+        }
+        Err(error_message) => {
+            println!("\n❌ Failed to load `.env` variables:");
+            println!("{error_message}\n");
+            // Exit the program after showing the error message above.
+            return;
+        }
+    }
+
+    //_________________________________________________________________________
+
+    // STEP: 4 => Store the environment variables as Rust variables
+
+    let pguser: String = env::var("PGUSER").expect("PGUSER is not set");
+
+    let pgpassword: String =
+        env::var("PGPASSWORD").expect("PGPASSWORD is not set");
+
+    let pghost: String = env::var("PGHOST").expect("PGHOST is not set");
+
+    let pgport: String = env::var("PGPORT").expect("PGPORT is not set");
+
+    let pgdatabase: String =
+        env::var("PGDATABASE").expect("PGDATABASE is not set");
+
+    //_________________________________________________________________________
+    
+    // STEP: 5 =>  
+
 
     //_________________________________________________________________________
 }
