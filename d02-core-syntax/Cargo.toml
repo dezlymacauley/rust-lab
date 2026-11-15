@@ -1,5 +1,6 @@
 [workspace]
 resolver = "3"
 members = [
-    "programs/d01-traits/*"
+    "programs/d01-code-modularity/*",
+    "programs/d02-traits/*",
 ]

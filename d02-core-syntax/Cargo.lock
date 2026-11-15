@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "d01-inline-modules-mod-and-pub"
+version = "0.1.0"
+
+[[package]]
 name = "d01-starting-example"
 version = "0.1.0"
 
@@ -11,13 +15,21 @@ name = "d02-introduction-to-polymorphism"
 version = "0.1.0"
 
 [[package]]
+name = "d02-putting-a-module-in-a-separate-file"
+version = "0.1.0"
+
+[[package]]
 name = "d03-default-implementation"
 version = "0.1.0"
 
 [[package]]
-name = "d04-overriding-the-default-implementation"
+name = "d03-the-use-keyword"
 version = "0.1.0"
 
 [[package]]
-name = "d05-trait-bounds"
+name = "d04-modules-that-contain-structs"
+version = "0.1.0"
+
+[[package]]
+name = "d04-overriding-the-default-implementation"
 version = "0.1.0"
