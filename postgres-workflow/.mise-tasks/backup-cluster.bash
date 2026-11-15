@@ -46,7 +46,7 @@ printf "⏳ Creating logical Postgres cluster backup...\n"
 
 backup_file="$PG_BACKUPS_DIR/postgres_cluster_$timestamp.sql"
 
-if ! PGPASSWORD="$PGPASSWORD" pg_dumpall \
+if ! pg_dumpall \
     --host="$PGHOST" \
     --port="$PGPORT" \
     --username=postgres \

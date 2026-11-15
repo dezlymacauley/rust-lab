@@ -10,7 +10,7 @@ set -euo pipefail
 : "${PGDATA:?Missing environment variable PGDATA}"
 : "${PGHOST:?Missing environment variable PGHOST}"
 : "${PGPORT:?Missing environment variable PGPORT}"
-: "${POSTGRES_PASSWORD:?Missing environment variable POSTGRES_PASSWORD}"
+: "${PGPASSWORD:?Missing environment variable PGPASSWORD}"
 #______________________________________________________________________________
 
 # STEP: 2 => Ask for the backup file path
@@ -108,7 +108,7 @@ printf "✅ Backup prepared for restoration.\n"
 printf "\n"
 printf "⏳ Restoring Postgres cluster backup...\n"
 
-if ! PGPASSWORD="$POSTGRES_PASSWORD" psql \
+if ! psql \
     --host="$PGHOST" \
     --port="$PGPORT" \
     --username=postgres \
