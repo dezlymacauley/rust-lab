@@ -37,3 +37,27 @@ setup-cluster  mise run setup-cluster
 toggle-server  mise run toggle-server
 ```
 _______________________________________________________________________________
+
+### NOTE: Using `connect-admin`
+
+To use `connect-admin`:
+1. Ensure that the `PGUSER` in your .env file is set to `postgres`,
+and that `PGPASSWORD` is set to the password for Postgres.
+
+2. `connect-admin` is designed to use `psql` 
+to connect to the `postgres` database, using the user `postgres`,
+to perform administrative tasks on the Postgres cluster.
+_______________________________________________________________________________
+
+### NOTE: Using `restore-cluster`
+
+To use `restore-cluster`:
+1. Create a backup of your current cluster with `backup-cluster`
+
+2. Then run `setup-cluster` to delete the current current cluster and
+setup a new postgres cluster.
+
+3. Then run `restore-cluster` to replace this cluster with 
+the`.sql` backup file that was created when you 
+ran the `backup-cluster` command.
+_______________________________________________________________________________
