@@ -1,4 +1,18 @@
+// Brings the `env` module from the Rust standard library into scope
+// I need this to use `env::var()`
+use std::env;
+
 fn main() {
+    //_________________________________________________________________________
+
+    // STEP: 1 => Create your `.env` file in the root of the project,
+    // and ensure that it is listed in the `.gitignore` file
+
+    // For this project my `.env` file only contains the following:
+    // SVELTEKIT_UI_PORT=6969
+    // POSTGRES_DB_PORT=5582
+
+    //_________________________________________________________________________
 
     // STEP: 2 => Create an absolute file path to the `.env` file
 

@@ -4,3 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+
+# For loading environment variables listed in a `.env` file 
+# into the process environment, 
+# so that they can be stored as Rust variables.
+dotenvy = "0.15.7"
