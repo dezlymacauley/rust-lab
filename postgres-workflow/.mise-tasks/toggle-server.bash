@@ -22,7 +22,7 @@ fi
 if pg_ctl -D "$PGDATA" status > /dev/null 2>&1; then
 
     printf "\n"
-    printf "⏳ Stopping the Postgres server...\n"
+    printf "⏳ Stopping the Postgres server...\n\n"
 
     # `-m fast` terminates existing connections
     # and rolls back active transactions.
@@ -35,11 +35,11 @@ if pg_ctl -D "$PGDATA" status > /dev/null 2>&1; then
 else
 
     printf "\n"
-    printf "⏳ Starting the Postgres server...\n"
+    printf "⏳ Starting the Postgres server...\n\n"
 
     pg_ctl -D "$PGDATA" -l "$PGDATA/server.log" start -w > /dev/null
 
-    printf "✅ Postgres server started successfully:"
+    printf "✅ Postgres server started successfully:\n"
     printf "%s:%s\n\n" "$PGHOST" "$PGPORT"
 fi
 #______________________________________________________________________________

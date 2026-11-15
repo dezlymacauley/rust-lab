@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="📜 Connect as admin user with pqsl | alias = connect-admin"
+#MISE description="📜 Connect as admin user with psql | alias = connect-admin"
 #MISE quiet=true
 #______________________________________________________________________________
 
@@ -10,7 +10,7 @@ set -euo pipefail
 : "${PGDATA:?Missing environment variable PGDATA}"
 : "${PGHOST:?Missing environment variable PGHOST}"
 : "${PGPORT:?Missing environment variable PGPORT}"
-: "${POSTGRES_PASSWORD:?Missing environment variable POSTGRES_PASSWORD}"
+: "${PGPASSWORD:?Missing environment variable PGPASSWORD}"
 
 if [[ ! -f "$PGDATA/PG_VERSION" ]]; then
     printf "❌ No valid Postgres cluster was found.\n" >&2
@@ -28,7 +28,7 @@ fi
 printf "\n"
 printf "⏳ Connecting to Postgres...\n"
 
-PGPASSWORD="$POSTGRES_PASSWORD" exec psql \
+exec psql \
     --host="$PGHOST" \
     --port="$PGPORT" \
     --username=postgres \
