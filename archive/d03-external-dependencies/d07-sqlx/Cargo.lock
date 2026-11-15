@@ -174,16 +174,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "d01-setting-up-sqlx-with-postgres"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "dotenvy",
- "sqlx",
- "tokio",
-]
-
-[[package]]
 name = "d02-connecting-a-program-to-postgres"
 version = "0.1.0"
 dependencies = [
