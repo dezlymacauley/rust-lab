@@ -3,12 +3,12 @@
 
     The module is responsible for the following:
 
-    1. Loading the variables declared in project's `.env` file 
+    1. Loading the variables declared in project's `.env` file
     into the process environment.
 
     2. Creating a PostgresConfig struct that will store the values of those
     environment variables in the program,
-    and use them to create a Postgres connection string that can be used 
+    and use them to create a Postgres connection string that can be used
     by SQLx to connect to a Postgres database.
 */
 
@@ -21,7 +21,7 @@ use std::path::PathBuf;
 
 // STEP: 1 => Create the relevant function
 
-// This function will load the variables declared in the `.env` file 
+// This function will load the variables declared in the `.env` file
 // of the project into the process environment.
 pub fn load_dot_env() -> Result<(), dotenvy::Error> {
     let project_root: PathBuf = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
