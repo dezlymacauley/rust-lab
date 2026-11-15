@@ -1,0 +1,6 @@
+[workspace]
+resolver = "3"
+members = [
+  "programs/d01-dotenvy/*",
+  "programs/d02-sqlx/*", 
+]
