@@ -8,14 +8,16 @@
     2. For this project, create a .env file with the following enviroment
     variables:
 
-    PGUSER="1"
-    PGPASSWORD="2"
-    PGHOST="3"
-    PGPORT="4"
-    PGDATABASE="5"
+    PGUSER="postgres"
+    PGPASSWORD="postgres"
+    PGHOST="127.0.0.1"
+    PGPORT="7676"
+    PGDATABASE="rust_lab"
 
     3. Add `dotenvy` to your project:
     cargo add dotenvy
+
+    NOTE: Ensure that you set a strong password for `PGPASSWORD`
 */
 
 //_____________________________________________________________________________
@@ -24,10 +26,6 @@
 
 use std::env;
 use std::path::PathBuf;
-
-//_____________________________________________________________________________
-
-// SECTION: 2 => External Imports
 
 //_____________________________________________________________________________
 
@@ -55,7 +53,7 @@ fn main() {
 
     match dotenvy_status {
         Ok(()) => {
-            println!("\n✅ Successfully loaded `.env` variables\n");
+            println!("\n✅ Successfully loaded `.env` variables");
         }
         Err(error_message) => {
             println!("\n❌ Failed to load `.env` variables:");
@@ -82,9 +80,14 @@ fn main() {
         env::var("PGDATABASE").expect("PGDATABASE is not set");
 
     //_________________________________________________________________________
-    
-    // STEP: 5 =>  
 
+    // STEP: 5 => Create a Postgres connection string
 
+    let postgres_connection_string: String = format!(
+        "postgresql://{pguser}:{pgpassword}@{pghost}:{pgport}/{pgdatabase}"
+    );
+
+    println!("\npostgres_connection_string:");
+    println!("{postgres_connection_string}\n");
     //_________________________________________________________________________
 }
