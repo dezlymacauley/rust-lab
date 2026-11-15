@@ -1,6 +1,8 @@
 # Setting up SQLx with Postgres
 _______________________________________________________________________________
 
+## Global Setup
+
 Install the `Rust Toolchain` and `Mise`
 _______________________________________________________________________________
 
@@ -13,6 +15,32 @@ _______________________________________________________________________________
 Use `cargo-binstall` to to install the `sqlx-cli` globally
 ```bash
 cargo binstall --no-confirm sqlx-cli
+```
+_______________________________________________________________________________
+
+## Project Setup
+
+Add `dotenvy` to the project 
+```bash
+cargo add dotenvy
+```
+
+This is for loading variables declared in the `.env` file into 
+the process environment, 
+so that their values can be stored as Rust variables.
+_______________________________________________________________________________
+
+Add `tokio` to the project, with the `features` flag set to `full`
+```bash
+cargo add tokio \
+    --features full
+```
+_______________________________________________________________________________
+
+Add `sqlx` to the project
+```bash
+cargo add sqlx \
+    --features runtime-tokio,macros,time,postgres
 ```
 _______________________________________________________________________________
 
@@ -139,30 +167,5 @@ You should see an output like this
 --------+------------------+-------+----------
  public | _sqlx_migrations | table | postgres
  public | tickets          | table | postgres
-```
-_______________________________________________________________________________
-
-Add the following dependencies to your project
-
-tokio (an async runtime)
-```bash
-cargo add tokio \
-    --features full
-```
-
-sqlx (A database client)
-```bash
-cargo add sqlx \
-    --features runtime-tokio,postgres,macros,time
-```
-
-anyhow (For cleaner and more convinient error propagation)
-```bash
-cargo add anyhow
-```
-
-dotenvy (For loading variables into the environment)
-```bash
-cargo add dotenvy
 ```
 _______________________________________________________________________________
