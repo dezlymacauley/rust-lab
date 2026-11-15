@@ -1,3 +1,0 @@
-[shell_alias]
-clean = "cargo clean"
-run = "cargo run --quiet"

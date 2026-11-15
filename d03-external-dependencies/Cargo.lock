@@ -3,8 +3,11 @@
 version = 4
 
 [[package]]
-name = "d01-ab"
+name = "d01-creating-a-postgres-connection-string"
 version = "0.1.0"
+dependencies = [
+ "dotenvy",
+]
 
 [[package]]
 name = "d01-loading-environment-variables"
