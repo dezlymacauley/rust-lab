@@ -46,11 +46,38 @@ fn get_env_value(name_of_variable: &str) -> String {
 }
 //_____________________________________________________________________________
 
-// STEP: 2 => Create a struct
+// STEP: 2 => Create a struct for the Postgres configuration
 
+struct PostgresConfig {
+    pguser: String,
+    pgpassword: String,
+    pghost: String,
+    pgport: String,
+    pgdatabase: String,
+}
 
+impl PostgresConfig {
+    fn new() -> Self {
+        Self {
+            pguser: get_env_value("PGUSER"),
+            pgpassword: get_env_value("PGPASSWORD"),
+            pghost: get_env_value("PGHOST"),
+            pgport: get_env_value("PGPORT"),
+            pgdatabase: get_env_value("PGDATABASE"),
+        }
+    }
 
-
+    fn connection_string(&self) -> String {
+        format!(
+            "postgresql://{}:{}@{}:{}/{}",
+            self.pguser,
+            self.pgpassword,
+            self.pghost,
+            self.pgport,
+            self.pgdatabase
+        )
+    }
+}
 //_____________________________________________________________________________
 
 fn main() {
@@ -88,20 +115,15 @@ fn main() {
     }
     //_________________________________________________________________________
 
-    // STEP: 5 => Store the environment variables as Rust variables
+    // STEP: 5 => Create a Postgres configuration
 
-    let pguser: String = get_env_value("PGUSER");
-    let pgpassword: String = get_env_value("PGPASSWORD");
-    let pghost: String = get_env_value("PGHOST");
-    let pgport: String = get_env_value("PGPORT");
-    let pgdatabase: String = get_env_value("PGDATABASE");
+    let postgres_config: PostgresConfig = PostgresConfig::new();
     //_________________________________________________________________________
 
-    // STEP: 6 => Create a Postgres connection string
+    // STEP: 6 => Use the PostgresConfig to create a connection String
 
-    let postgres_connection_string: String = format!(
-        "postgresql://{pguser}:{pgpassword}@{pghost}:{pgport}/{pgdatabase}"
-    );
+    let postgres_connection_string: String =
+        postgres_config.connection_string();
 
     println!("\npostgres_connection_string:");
     println!("{postgres_connection_string}\n");
