@@ -1,0 +1,17 @@
+[package]
+name = "d02-connecting-to-postgres"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+dotenvy = "0.15.7"
+
+sqlx = { 
+  version = "0.9.0", 
+  features = ["runtime-tokio", "macros", "time", "postgres"] 
+}
+
+tokio = { 
+  version = "1.54.1", 
+  features = ["full"] 
+}
