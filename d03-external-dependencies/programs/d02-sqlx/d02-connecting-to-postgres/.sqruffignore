@@ -1,0 +1,2 @@
+# Ignore PostgreSQL provisioning scripts (psql-specific commands)
+postgres-cluster-management/databases-and-database-schemas/rust_lab.sql

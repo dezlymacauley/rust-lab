@@ -1,5 +1,6 @@
 [tools]
 eza = "latest"
+"github:quarylabs/sqruff" = "latest"
 #______________________________________________________________________________
 
 [shell_alias]
